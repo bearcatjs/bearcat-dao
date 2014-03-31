@@ -1,0 +1,51 @@
+{
+	"name": "bearcat-dao",
+	"beans": [{
+		"id": "domainDaoSupport",
+		"func": "lib.core.domainDaoSupport",
+		"scope": "prototype",
+		"props": [{
+			"name": "sqlTemplate",
+			"ref": "sqlTemplate"
+		}, {
+			"name": "cacheTemplate",
+			"ref": "cacheTemplate"
+		}]
+	}, {
+		"id": "sqlTemplate",
+		"func": "lib.template.sql.mysqlTemplate",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "mysqlConnectionManager"
+		}]
+	}, {
+		"id": "cacheTemplate",
+		"func": "lib.template.cache.redisTemplate",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "redisConnectionManager"
+		}]
+	}, {
+		"id": "mysqlConnectionManager",
+		"func": "lib.connection.sql.mysqlConnectionManager",
+		"props": [{
+			"name": "port",
+			"value": 3306
+		}, {
+			"name": "host",
+			"value": "localhost"
+		}, {
+			"name": "user",
+			"value": "root"
+		}, {
+			"name": "password",
+			"value": "test"
+		}, {
+			"name": "database",
+			"value": "bearcat_test"
+		}]
+	}, {
+		"id": "redisConnectionManager",
+		"func": "lib.connection.cache.redisConnectionManager"
+	}]
+}

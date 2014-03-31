@@ -1,0 +1,33 @@
+{
+  "name": "bearcat-dao",
+  "version": "0.0.1",
+  "description": "dao framework ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dao",
+    "framework"
+  ],
+  "dependencies": {
+    "pomelo-logger": "0.1.x",
+    "redis": "0.9.x",
+    "mysql": "2.0.x"
+  },
+  "author": "fantasyni",
+  "license": "MIT",
+  "devDependencies": {
+    "bearcat": "*",
+    "should": ">=0.0.1",
+    "mocha": ">=0.0.1",
+    "socket.io-client": ">=0.0.1",
+    "jscoverage": ">=0.0.1",
+    "muk": ">=0.0.1",
+    "grunt": "~0.4.2",
+    "grunt-mocha-test": "0.8.x",
+    "grunt-jscoverage": "0.0.3",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-contrib-jshint": "~0.8.0"
+  }
+}

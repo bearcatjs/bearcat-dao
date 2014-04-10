@@ -7,15 +7,23 @@ var paths = [simplepath];
 var tableName = "bearcat_dao_test";
 var applicationContext = new ApplicationContext(paths);
 
+process.env.LOGGER_LINE = true;
 applicationContext.on('finishRefresh', function() {
-	var domainDaoSupport = applicationContext.getBean('domainDaoSupport');
-	domainDaoSupport.initConfig(personDomain);
+	// var domainDaoSupport = applicationContext.getBean('domainDaoSupport');
+	// domainDaoSupport.initConfig(personDomain);
 
-	var params = [50, 51];
-	var sql = ' id in (?, ?)';
-	domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
-		domainDaoSupport.batchDelete(results, function(err, _results) {
-			console.log(_results);
+	// var params = [50, 51];
+	// var sql = ' id in (?, ?)';
+	// domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
+	// 	domainDaoSupport.batchDelete(results, function(err, _results) {
+	// 		console.log(_results);
+	// 	});
+	// });
+	var personService = applicationContext.getBean('personService');
+	personService.testMethodTransaction(function(err, results) {
+		// console.log(results);
+		personService.testMethodTransaction(function(err, results) {
+			// console.log(results);
 		});
 	});
 });

@@ -17,6 +17,9 @@
 		"props": [{
 			"name": "connectionManager",
 			"ref": "mysqlConnectionManager"
+		}, {
+			"name": "transactionManager",
+			"ref": "dbTransactionManager"
 		}]
 	}, {
 		"id": "cacheTemplate",
@@ -42,10 +45,45 @@
 			"value": "test"
 		}, {
 			"name": "database",
-			"value": "bearcat_test"
-		}]
+			"value": "bearcat_dao_test"
+		}],
+		"proxy": false
 	}, {
 		"id": "redisConnectionManager",
 		"func": "lib.connection.cache.redisConnectionManager"
+	}, {
+		"id": "dbTransactionManager",
+		"func": "lib.transaction.dbTransactionManager",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "mysqlConnectionManager"
+		}],
+		"proxy": false
+	}, {
+		"id": "transactionAspect",
+		"func": "lib.aspect.transactionAspect",
+		"props": [{
+			"name": "dbTransactionManager",
+			"ref": "dbTransactionManager"
+		}],
+		"aop": [{
+			"pointcut": "around:.*?Transaction",
+			"advice": "doInTransaction"
+		}]
+	}, {
+		"id": "personDao",
+		"func": "test.transaction.dao.personDao",
+		"props": [{
+			"name": "domainDaoSupport",
+			"ref": "domainDaoSupport"
+		}],
+		"initMethod": "init"
+	}, {
+		"id": "personService",
+		"func": "test.transaction.service.personService",
+		"props": [{
+			"name": "personDao",
+			"ref": "personDao"
+		}]
 	}]
 }

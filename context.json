@@ -31,22 +31,6 @@
 	}, {
 		"id": "mysqlConnectionManager",
 		"func": "lib.connection.sql.mysqlConnectionManager",
-		"props": [{
-			"name": "port",
-			"value": 3306
-		}, {
-			"name": "host",
-			"value": "localhost"
-		}, {
-			"name": "user",
-			"value": "root"
-		}, {
-			"name": "password",
-			"value": "test"
-		}, {
-			"name": "database",
-			"value": "bearcat_dao_test"
-		}],
 		"proxy": false
 	}, {
 		"id": "redisConnectionManager",

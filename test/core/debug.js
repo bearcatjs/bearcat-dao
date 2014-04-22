@@ -1,14 +1,13 @@
-var bearcat = require('bearcat');
-var ApplicationContext = bearcat.getApplicationContext();
+var Bearcat = require('bearcat');
 var personDomain = require('../mock/domain/person');
 var domainFactory = require('../../lib/util/domainFactory');
 var simplepath = require.resolve('../../context.json');
 var paths = [simplepath];
+var bearcat = Bearcat.createApp(paths);
 var tableName = "bearcat_dao_test";
-var applicationContext = new ApplicationContext(paths);
 
 process.env.LOGGER_LINE = true;
-applicationContext.on('finishRefresh', function() {
+bearcat.start(function() {
 	// var domainDaoSupport = applicationContext.getBean('domainDaoSupport');
 	// domainDaoSupport.initConfig(personDomain);
 
@@ -19,13 +18,44 @@ applicationContext.on('finishRefresh', function() {
 	// 		console.log(_results);
 	// 	});
 	// });
-	var personService = applicationContext.getBean('personService');
-	personService.testMethodTransaction(function(err, results) {
-		// console.log(results);
-		personService.testMethodTransaction(function(err, results) {
-			// console.log(results);
+
+	// var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+	// domainDaoSupport.initConfig(personDomain);
+	// var person1 = domainFactory.getDomain(personDomain);
+	// person1.setName('yyy');
+	// person1.setNum(100);
+	// person1.setCreateAt(Date.now());
+
+	// var list = [];
+	// list.push(person1);
+
+	// var person2 = domainFactory.getDomain(personDomain);
+	// person2.setName('bbb');
+	// person2.setNum(200);
+	// person2.setCreateAt(Date.now());
+
+	// list.push(person2);
+
+	// domainDaoSupport.batchAdd(list, function(err, results) {
+	// 	err = err || true;
+
+	// });
+	var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+	domainDaoSupport.initConfig(personDomain);
+
+	var sql = ' 1 = 1'
+	var opt = {
+		isAsc: false,
+		offset: 0,
+		limit: 2,
+		orderColumn: "id"
+	};
+	domainDaoSupport.getListByWhere(sql, null, opt, function(err, results) {
+		err = err || true;
+
+		domainDaoSupport.batchDelete(results, function(err, _results) {
+			err = err || true;
+
 		});
 	});
 });
-
-applicationContext.refresh();

@@ -22,8 +22,15 @@ PersonDao.prototype.transaction = function(transactionStatus) {
 	return this;
 }
 
-PersonDao.prototype.getList = function(params, cb) {
+PersonDao.prototype.getAList = function(params, cb) {
 	var sql = ' aid in (?, ?)';
+	this.domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
+		cb(err, results);
+	});
+}
+
+PersonDao.prototype.getList = function(params, cb) {
+	var sql = ' id in (?, ?)';
 	this.domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
 		cb(err, results);
 	});

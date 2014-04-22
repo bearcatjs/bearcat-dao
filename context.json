@@ -54,20 +54,5 @@
 			"pointcut": "around:.*?Transaction",
 			"advice": "doInTransaction"
 		}]
-	}, {
-		"id": "personDao",
-		"func": "test.transaction.dao.personDao",
-		"props": [{
-			"name": "domainDaoSupport",
-			"ref": "domainDaoSupport"
-		}],
-		"initMethod": "init"
-	}, {
-		"id": "personService",
-		"func": "test.transaction.service.personService",
-		"props": [{
-			"name": "personDao",
-			"ref": "personDao"
-		}]
 	}]
 }

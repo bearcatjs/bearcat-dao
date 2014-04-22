@@ -1,5 +1,7 @@
+var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
+
 var should = require('should');
-var SqlBuilderUtil = require('../../lib/util/sqlBuilderUtil');
+var SqlBuilderUtil = require('../../' + lib + '/util/sqlBuilderUtil');
 
 describe('bearcat-dao', function() {
 	describe('sqlBuilderUtil', function() {

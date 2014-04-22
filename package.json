@@ -1,10 +1,10 @@
 {
   "name": "bearcat-dao",
-  "version": "0.0.1",
-  "description": "dao framework ",
+  "version": "0.1.1",
+  "description": "dao O/R mapping, transaction framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt"
   },
   "keywords": [
     "dao",
@@ -18,7 +18,7 @@
   "author": "fantasyni",
   "license": "MIT",
   "devDependencies": {
-    "bearcat": "*",
+    "bearcat": "0.1.x",
     "should": ">=0.0.1",
     "mocha": ">=0.0.1",
     "socket.io-client": ">=0.0.1",

@@ -1,0 +1,89 @@
+{
+	"name": "bearcat-dao",
+	"beans": [{
+		"id": "domainDaoSupport",
+		"func": "lib-cov.core.domainDaoSupport",
+		"scope": "prototype",
+		"props": [{
+			"name": "sqlTemplate",
+			"ref": "sqlTemplate"
+		}, {
+			"name": "cacheTemplate",
+			"ref": "cacheTemplate"
+		}]
+	}, {
+		"id": "sqlTemplate",
+		"func": "lib-cov.template.sql.mysqlTemplate",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "mysqlConnectionManager"
+		}, {
+			"name": "transactionManager",
+			"ref": "dbTransactionManager"
+		}]
+	}, {
+		"id": "cacheTemplate",
+		"func": "lib-cov.template.cache.redisTemplate",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "redisConnectionManager"
+		}]
+	}, {
+		"id": "mysqlConnectionManager",
+		"func": "lib-cov.connection.sql.mysqlConnectionManager",
+		"proxy": false,
+		"props": [{
+			"name": "port",
+			"value": 3306
+		}, {
+			"name": "host",
+			"value": "localhost"
+		}, {
+			"name": "user",
+			"value": "root"
+		}, {
+			"name": "password",
+			"value": "test"
+		}, {
+			"name": "database",
+			"value": "bearcat_dao_test"
+		}]
+	}, {
+		"id": "redisConnectionManager",
+		"func": "lib-cov.connection.cache.redisConnectionManager"
+	}, {
+		"id": "dbTransactionManager",
+		"func": "lib-cov.transaction.dbTransactionManager",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "mysqlConnectionManager"
+		}],
+		"proxy": false
+	}, {
+		"id": "transactionAspect",
+		"func": "lib-cov.aspect.transactionAspect",
+		"props": [{
+			"name": "dbTransactionManager",
+			"ref": "dbTransactionManager"
+		}],
+		"aop": [{
+			"pointcut": "around:.*?Transaction",
+			"advice": "doInTransaction"
+		}]
+	}, {
+		"id": "personDao",
+		"func": "test.transaction.dao.personDao",
+		"props": [{
+			"name": "domainDaoSupport",
+			"ref": "domainDaoSupport"
+		}],
+		"init": "init"
+	}, {
+		"id": "personService",
+		"func": "test.transaction.service.personService",
+		"props": [{
+			"name": "personDao",
+			"ref": "personDao"
+		}]
+	}]
+}

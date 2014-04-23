@@ -1,6 +1,6 @@
 {
   "name": "bearcat-dao",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "dao O/R mapping, transaction framework",
   "main": "index.js",
   "scripts": {

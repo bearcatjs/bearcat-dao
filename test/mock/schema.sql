@@ -8,3 +8,12 @@
 
  	primary key(id)
  )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='bearcat_dao_test';
+
+ DROP TABLE IF EXISTS bearcat_dao_test1;
+ create table bearcat_dao_test1 ( 
+ 	id bigint(20) NOT NULL COMMENT 'id',
+ 	name varchar(100) NOT NULL COMMENT '姓名',
+ 	create_at bigint(20) NOT NULL COMMENT '创建时间',
+
+ 	primary key(id, name)
+ )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='bearcat_dao_test1';

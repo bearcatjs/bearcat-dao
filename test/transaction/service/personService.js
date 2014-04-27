@@ -1,3 +1,5 @@
+var PersonDomain = require('../../mock/domain/person');
+
 var PersonService = function() {
 	this.personDao = null;
 }
@@ -23,9 +25,13 @@ PersonService.prototype.testMethodTransaction = function(cb, txStatus) {
 }
 
 PersonService.prototype.testMethodRTransaction = function(cb, txStatus) {
-	var params = [100, 100, 'fni', Date.now()];
+	var person = new PersonDomain['func']();
+	person.setNum(100);
+	person.setName('yy');
+	person.setCreateAt(Date.now());
+
 	var self = this;
-	this.personDao.transaction(txStatus).addPerson(params, function(err, results) {
+	this.personDao.transaction(txStatus).add(person, function(err, results) {
 		if (err) {
 			cb(err);
 			return;

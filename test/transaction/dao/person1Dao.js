@@ -1,4 +1,4 @@
-var PersonDomain = require('../../mock/domain/person');
+var PersonDomain = require('../../mock/domain/person1');
 var PersonDao = function() {
 	this.domainDaoSupport = null;
 }
@@ -22,23 +22,11 @@ PersonDao.prototype.transaction = function(transactionStatus) {
 	return this;
 }
 
-PersonDao.prototype.getAList = function(params, cb) {
-	var sql = ' aid in (?, ?)';
-	this.domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
-		cb(err, results);
-	});
-}
-
 PersonDao.prototype.getList = function(params, cb) {
 	var sql = ' id in (?, ?)';
 	this.domainDaoSupport.getListByWhere(sql, params, null, function(err, results) {
 		cb(err, results);
 	});
-}
-
-PersonDao.prototype.addPerson = function(params, cb) {
-	var sql = 'insert into ' + this.domainDaoSupport.getTableConfig().getTableName() + ' set id = ?, num = ?, name = ?, create_at = ?';
-	this.domainDaoSupport.add(sql, params, cb);
 }
 
 PersonDao.prototype.add = function(obj, cb) {

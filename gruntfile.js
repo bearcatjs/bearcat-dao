@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  var src = ['test/core/domainDaoSupport.js', 'test/connection/cache/*.js', 'test/connection/sql/*.js', 'test/util/*.js'];
+  var src = ['test/core/domainDaoSupport.js', 'test/connection/cache/*.js', 'test/connection/sql/*.js', 'test/template/cache/*.js', 'test/util/*.js'];
 
   // Project configuration.
   grunt.initConfig({

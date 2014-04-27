@@ -12,8 +12,9 @@ describe('bearcat-dao', function() {
 
 			should.exist(connection);
 			redisConnectionManager.on('ready', function() {
+				redisConnectionManager.release(connection);
 				done();
 			});
 		});
-	})
+	});
 });

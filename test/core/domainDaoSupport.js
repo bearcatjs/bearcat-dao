@@ -5,6 +5,7 @@ var Bearcat = require('bearcat');
 var personDomain = require('../mock/domain/person');
 var person1Domain = require('../mock/domain/person1');
 var person2Domain = require('../mock/domain/person2');
+var joinPersonDomain = require('../mock/domain/joinPerson');
 var domainFactory = require('../../' + lib + '/util/domainFactory');
 
 describe('domainDaoSupport', function() {
@@ -380,6 +381,25 @@ describe('domainDaoSupport', function() {
 		});
 	});
 
+	describe('domainDaoSupport exist', function() {
+		it('should exist right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig(personDomain);
+
+			var params = [6];
+			var sql = 'select * from ' + tableName + ' where id = ?';
+
+			domainDaoSupport.exists(sql, params, function(err, result) {
+				err = err || true;
+				err.should.be.true;
+
+				result.should.be.true;
+
+				done();
+			});
+		});
+	});
+
 	describe('domainDaoSupport updateColumn', function() {
 		it('should updateColumn right', function(done) {
 			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
@@ -594,6 +614,35 @@ describe('domainDaoSupport', function() {
 					domainDaoSupport.removeFromCache(key);
 					done();
 				});
+			});
+		});
+	});
+
+	describe('domainDaoSupport join select right', function() {
+		it('should do join select right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig(personDomain);
+
+			var sql = 'select bearcat_dao_test.id, bearcat_dao_test.num from bearcat_dao_test, bearcat_dao_test1 where bearcat_dao_test.id = bearcat_dao_test1.id'
+
+			var opt = {
+				domain: joinPersonDomain
+			}
+
+			domainDaoSupport.getList(sql, null, opt, function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				for (var i = 0; i < results.length; i++) {
+					var person = results[i];
+					person.should.exist;
+					person.should.be.an.instanceOf(joinPersonDomain.func);
+					var id = person.getId();
+					var num = person.getNum();
+					id.should.exist;
+					num.should.exist;
+				}
+				done();
 			});
 		});
 	});

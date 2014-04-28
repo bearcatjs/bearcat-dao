@@ -1,7 +1,8 @@
 var Bearcat = require('bearcat');
 var personDomain = require('../mock/domain/person');
+var joinPersonDomain = require('../mock/domain/joinPerson');
 var domainFactory = require('../../lib/util/domainFactory');
-var simplepath = require.resolve('../../context.json');
+var simplepath = require.resolve('../../test-context.json');
 var paths = [simplepath];
 var bearcat = Bearcat.createApp(paths);
 var tableName = "bearcat_dao_test";
@@ -43,19 +44,20 @@ bearcat.start(function() {
 	var domainDaoSupport = bearcat.getBean('domainDaoSupport');
 	domainDaoSupport.initConfig(personDomain);
 
-	var sql = ' 1 = 1'
+	var sql = 'select bearcat_dao_test.id, bearcat_dao_test.num from bearcat_dao_test, bearcat_dao_test1 where bearcat_dao_test.id = bearcat_dao_test1.id'
+
 	var opt = {
-		isAsc: false,
-		offset: 0,
-		limit: 2,
-		orderColumn: "id"
-	};
-	domainDaoSupport.getListByWhere(sql, null, opt, function(err, results) {
+		domain: joinPersonDomain
+	}
+
+	domainDaoSupport.getList(sql, null, opt, function(err, results) {
+		console.log(err);
 		err = err || true;
 
-		domainDaoSupport.batchDelete(results, function(err, _results) {
-			err = err || true;
-
-		});
+		for (var i = 0; i < results.length; i++) {
+			var person = results[i];
+			var id = person.getId();
+			var num = person.getNum();
+		}
 	});
 });

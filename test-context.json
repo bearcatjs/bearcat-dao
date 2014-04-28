@@ -85,5 +85,13 @@
 			"name": "personDao",
 			"ref": "personDao"
 		}]
+	}, {
+		"id": "person1Dao",
+		"func": "test.transaction.dao.person1Dao",
+		"props": [{
+			"name": "domainDaoSupport",
+			"ref": "domainDaoSupport"
+		}],
+		"init": "init"
 	}]
 }

@@ -30,37 +30,167 @@
 
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h2>
+<a name="bearcat-dao----an-or-mapping-dao-framework" class="anchor" href="#bearcat-dao----an-or-mapping-dao-framework"><span class="octicon octicon-link"></span></a>Bearcat-dao -- an O/R mapping dao framework</h2>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Bearcat-dao is an O/R mapping dao framework which provides O/R mapping, dao support for <a href="http://nodejs.org/">node.js</a>.<br>
+It is written by <a href="https://github.com/bearcatnode/bearcat/wiki/POJOs-based-development">POJOs</a> and can be nicely used with <a href="https://github.com/bearcatnode/bearcat">Bearcat</a>.  </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>O/R mapping<br>
+</li>
+<li>cacheTemplate<br>
+</li>
+<li>sqlTemplate<br>
+</li>
+<li>transaction<br>
+</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="domain-definition" class="anchor" href="#domain-definition"><span class="octicon octicon-link"></span></a>Domain Definition</h3>
+
+<p>Domain is a POJO, express the relationship between table and object  </p>
+
+<pre><code>var simpleDomain = function() {
+    this.id = 0;
+    this.name = null;
+}
+
+module.exports = {
+    func: Domain,
+    primary: [{
+        name: "id",
+        type: "Long"
+    }],
+    fields: ["name"],
+    tableName: "test"
+}
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>more in details:  </p>
+
+<ul>
+<li>func : constructor function for the domain object</li>
+<li>primary : an array defines primary fields<br>
+</li>
+<li>fields : an array defines fields except primary fields<br><ul>
+<li>field can be defined by object with <strong><em>name</em></strong>, <strong><em>type</em></strong> properties, or simply by name string<br>
+</li>
+</ul>
+</li>
+<li>tableName : the name of table to be mapped by the ORM object<br>
+</li>
+<li>key : the cached key for conjunctive query domain definition<br>
+</li>
+</ul><h3>
+<a name="add-to-project" class="anchor" href="#add-to-project"><span class="octicon octicon-link"></span></a>Add to project</h3>
+
+<pre><code>npm install bearcat-dao --save
+</code></pre>
+
+<p>add beanDefinition to context.json used by your project<br><a href="https://github.com/bearcatnode/bearcat/wiki/Consistent-configuration">placeholds</a> can be nicely used to switch between contexts  </p>
+
+<pre><code>"beans": [{
+        "id": "mysqlConnectionManager",
+        "func": "node_modules.bearcat-dao.lib.connection.sql.mysqlConnectionManager",
+        "props": [{
+            "name": "port",
+            "value": "${mysql.port}"
+        }, {
+            "name": "host",
+            "value": "${mysql.host}"
+        }, {
+            "name": "user",
+            "value": "${mysql.user}"
+        }, {
+            "name": "password",
+            "value": "${mysql.password}"
+        }, {
+            "name": "database",
+            "value": "${mysql.database}"
+        }]
+    }, {
+        "id": "redisConnectionManager",
+        "func": "node_modules.bearcat-dao.lib.connection.cache.redisConnectionManager",
+        "props": [{
+            "name": "port",
+            "value": "${redis.port}"
+        }, {
+            "name": "host",
+            "value": "${redis.host}"
+        }]
+    }]
+</code></pre>
+
+<p>if you do not use redis, you can remove <strong><em>redisConnectionManager</em></strong> definition  </p>
 
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="write-daos" class="anchor" href="#write-daos"><span class="octicon octicon-link"></span></a>Write daos</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Bearcat-dao provides <strong><em>domainDaoSupport</em></strong> wrapping basic sql and cache operations<br>
+add it with properties dependency injection, and init it by invoking <strong><em>initConfig</em></strong> method<br>
+then you can use domainDaoSupport convenient methods to wrap your own daos  </p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<p>simpleDao.js</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<pre><code>var SimpleDomain = require('simpleDomain');
+var SimpleDao = function() {
+    this.domainDaoSupport = null;
+}
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+SimpleDao.prototype.init = function() {
+    // init with SimpleDomain to set up O/R mapping
+    this.domainDaoSupport.initConfig(SimpleDomain);
+}
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+// query list all
+// callback return mapped SimpleDomain array results
+SimpleDao.prototype.getList = function(cb) {
+    var sql = ' 1 = 1';
+    return this.domainDaoSupport.getListByWhere(sql, null, null, cb);
+}
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+module.exports = {
+    id: "simpleDao",
+    func: SimpleDao,
+    props: [{
+        name: "domainDaoSupport",
+        ref: "domainDaoSupport"
+    }],
+    "init": "init"
+}
+</code></pre>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) fantasyni and other contributors</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>

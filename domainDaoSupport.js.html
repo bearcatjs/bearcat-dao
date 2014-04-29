@@ -5,7 +5,7 @@
     <title>bearcat-dao</title>
     <link rel="stylesheet" href="stylesheets/bootstrap.css">
     <link rel="stylesheet" href="stylesheets/bootstrap-responsive.css">
-    <link rel="stylesheet" href="stypesheets/docs.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
     <style>
       body > .navbar .brand {
         float:left;
@@ -52,26 +52,26 @@
     </style>
   </head>
   <body data-spy="scroll" data-target=".scrollspy">
-    <!--div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container"><a class="brand"></a>
           <div class="nav-collapse collapse">
             <ul class="nav pull-right sponsored"></ul>
           </div>
         </div>
       </div>
-    </div-->
+    </div>
     <header id="overview" class="jumbotron subhead">
-      <!--div class="container">
+      <div class="container">
         <h1>bearcat-dao</h1>
         <p class="lead"></p>
-      </div-->
+      </div>
     </header>
     <div class="container">
       <div class="row">
         <div class="span3 bs-docs-sidebar">
-          <!--ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li><a href="../index.html">Main</a></li>
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <!--li><a href="../index.html">Main</a></li>
             <li><a href="../aspect/cacheAspect.js.html">aspect/cacheAspect.js</a></li>
             <li><a href="../aspect/transactionAspect.js.html">aspect/transactionAspect.js</a></li>
             <li><a href="../connection/cache/redisConnection.js.html">connection/cache/redisConnection.js</a></li>
@@ -93,31 +93,13 @@
             <li><a href="../util/domainFactory.js.html">util/domainFactory.js</a></li>
             <li><a href="../util/fieldUtil.js.html">util/fieldUtil.js</a></li>
             <li><a href="../util/sqlBuilderUtil.js.html">util/sqlBuilderUtil.js</a></li>
-            <li><a href="../util/utils.js.html">util/utils.js</a></li>
-          </ul-->
-          <!--div class="scrollspy">
+            <li><a href="../util/utils.js.html">util/utils.js</a></li-->
+          </ul>
+          <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
               <li><a href="#DomainDaoSupport"><i class="alert alert-info"></i><span>DomainDaoSupport</span></a>
               </li>
               <li><a href="#initConfig"><i class="alert alert-info"></i><span>initConfig</span></a>
-              </li>
-              <li><a href="#getConfig"><i class="alert alert-info"></i><span>getConfig</span></a>
-              </li>
-              <li><a href="#setTableConfig"><i class="alert alert-info"></i><span>setTableConfig</span></a>
-              </li>
-              <li><a href="#getTableConfig"><i class="alert alert-info"></i><span>getTableConfig</span></a>
-              </li>
-              <li><a href="#setSqlTemplate"><i class="alert alert-info"></i><span>setSqlTemplate</span></a>
-              </li>
-              <li><a href="#getSqlTemplate"><i class="alert alert-info"></i><span>getSqlTemplate</span></a>
-              </li>
-              <li><a href="#setCacheTemplate"><i class="alert alert-info"></i><span>setCacheTemplate</span></a>
-              </li>
-              <li><a href="#getCacheTemplate"><i class="alert alert-info"></i><span>getCacheTemplate</span></a>
-              </li>
-              <li><a href="#getDomainMap"><i class="alert alert-info"></i><span>getDomainMap</span></a>
-              </li>
-              <li><a href="#setDomainMap"><i class="alert alert-info"></i><span>setDomainMap</span></a>
               </li>
               <li><a href="#transaction"><i class="alert alert-info"></i><span>transaction</span></a>
               </li>
@@ -181,7 +163,7 @@
               </li>
             </ul>
           </div>
-        </div-->
+        </div>
         <div class="span9">
           <section id="DomainDaoSupport">
             <h1>DomainDaoSupport</h1>
@@ -192,10 +174,10 @@
           </section>
           <div class="description"><p>DomainDaoSupport constructor function.</p> </div>
           <pre><code class="language-javascript">var DomainDaoSupport = function() {
-	this.tableConfig = null;
-	this.sqlTemplate = null;
-	this.cacheTemplate = null;
-	this.domainMap = {};
+  this.tableConfig = null;
+  this.sqlTemplate = null;
+  this.cacheTemplate = null;
+  this.domainMap = {};
 }
 
 module.exports = DomainDaoSupport;</code></pre>
@@ -224,250 +206,25 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport domain O/R mapping configuration.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.initConfig = function(domainConfig) {
-	var func = domainConfig.func;
-	var tableName = domainConfig.tableName;
-	var primaryFields = domainConfig.primary || [];
-	var fields = domainConfig.fields || [];
-	if (!Utils.checkFunction(func)) {
-		logger.error('domain object have no OR mapping info ' + domainConfig);
-		return;
-	}
-	if (!tableName) {
-		logger.error('domain object OR mapping info have no tableName ' + domainConfig);
-		return;
-	}
+  var func = domainConfig.func;
+  var tableName = domainConfig.tableName;
+  var primaryFields = domainConfig.primary || [];
+  var fields = domainConfig.fields || [];
+  if (!Utils.checkFunction(func)) {
+    logger.error('domain object have no OR mapping info ' + domainConfig);
+    return;
+  }
+  if (!tableName) {
+    logger.error('domain object OR mapping info have no tableName ' + domainConfig);
+    return;
+  }
 
-	var tableConfig = new TableConfig();
-	tableConfig.setFunc(func);
-	tableConfig.setTableName(tableName);
-	tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
-	tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
-	this.setTableConfig(tableConfig);
-}</code></pre>
-          <section id="getConfig">
-            <h1>getConfig</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getConfig()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>domainConfig</td>
-                <td>Object</td>
-                <td>domain O/R mapping configuration</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport get domain O/R mapping configuration.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.getConfig = function(domainConfig) {
-	var func = domainConfig.func;
-	var key = domainConfig.key;
-	var primaryFields = domainConfig.primary || [];
-	var fields = domainConfig.fields || [];
-	if (!Utils.checkFunction(func)) {
-		logger.error('domain object have no OR mapping info ' + domainConfig);
-		return;
-	}
-
-	if (key) {
-		var domain = this.getDomainMap(key);
-		if (domain) {
-			return domain;
-		}
-	}
-
-	var tableConfig = new TableConfig();
-	tableConfig.setFunc(func);
-	tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
-	tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
-
-	if (key) {
-		this.setDomainMap(key, tableConfig);
-	}
-
-	return tableConfig;
-}</code></pre>
-          <section id="setTableConfig">
-            <h1>setTableConfig</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.setTableConfig()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>tableConfig</td>
-                <td>Object</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport set table configuration.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.setTableConfig = function(tableConfig) {
-	this.tableConfig = tableConfig;
-}</code></pre>
-          <section id="getTableConfig">
-            <h1>getTableConfig</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getTableConfig()</span> -><span>Object</span>
-            </p>
-          </section>
-          <div class="description"><p>DomainDaoSupport get table configuration.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.getTableConfig = function() {
-	return this.tableConfig;
-}</code></pre>
-          <section id="setSqlTemplate">
-            <h1>setSqlTemplate</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.setSqlTemplate()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>sqlTemplate</td>
-                <td>Object</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport set sqlTemplate.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.setSqlTemplate = function(sqlTemplate) {
-	this.sqlTemplate = sqlTemplate;
-}</code></pre>
-          <section id="getSqlTemplate">
-            <h1>getSqlTemplate</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getSqlTemplate()</span> -><span>Object</span>
-            </p>
-          </section>
-          <div class="description"><p>DomainDaoSupport get sqlTemplate.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.getSqlTemplate = function() {
-	return this.sqlTemplate;
-}</code></pre>
-          <section id="setCacheTemplate">
-            <h1>setCacheTemplate</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.setCacheTemplate()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>cacheTemplate</td>
-                <td>Object</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport set cacheTemplate.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.setCacheTemplate = function(cacheTemplate) {
-	this.cacheTemplate = cacheTemplate;
-}</code></pre>
-          <section id="getCacheTemplate">
-            <h1>getCacheTemplate</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getCacheTemplate()</span> -><span>Object</span>
-            </p>
-          </section>
-          <div class="description"><p>DomainDaoSupport get cacheTemplate.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.getCacheTemplate = function() {
-	return this.cacheTemplate;
-}</code></pre>
-          <section id="getDomainMap">
-            <h1>getDomainMap</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getDomainMap()</span> -><span>Object</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>key</td>
-                <td>String</td>
-                <td>cache key</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport get domain map from cache key.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.getDomainMap = function(key) {
-	return this.domainMap[key];
-}</code></pre>
-          <section id="setDomainMap">
-            <h1>setDomainMap</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.setDomainMap()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>key</td>
-                <td>String</td>
-                <td>cache key</td>
-              </tr>
-              <tr>
-                <td>tableConfig</td>
-                <td>Object</td>
-                <td>table domain configuration</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport set domain map from cache key.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.setDomainMap = function(key, tableConfig) {
-	this.domainMap[key] = tableConfig;
+  var tableConfig = new TableConfig();
+  tableConfig.setFunc(func);
+  tableConfig.setTableName(tableName);
+  tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
+  tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
+  this.setTableConfig(tableConfig);
 }</code></pre>
           <section id="transaction">
             <h1>transaction</h1>
@@ -494,7 +251,7 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport do transaction with transactionStatus.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.transaction = function(transactionStatus) {
-	return this.getSqlTemplate().transaction(transactionStatus);
+  return this.getSqlTemplate().transaction(transactionStatus);
 }</code></pre>
           <section id="deleteById">
             <h1>deleteById</h1>
@@ -526,9 +283,9 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport deleteById field id.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.deleteById = function(id, cb) {
-	var params = [id];
+  var params = [id];
 
-	return this.deleteByPrimaryKey(params, cb);
+  return this.deleteByPrimaryKey(params, cb);
 }</code></pre>
           <section id="deleteByPrimaryKey">
             <h1>deleteByPrimaryKey</h1>
@@ -560,13 +317,13 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport deleteByPrimaryKey.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.deleteByPrimaryKey = function(params, cb) {
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var tableName = tableConfig.getTableName();
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var tableName = tableConfig.getTableName();
 
-	var sql = SqlBuilderUtil.buildDeleteSql(tableName, FieldUtil.fieldToNames(primaryFields));
+  var sql = SqlBuilderUtil.buildDeleteSql(tableName, FieldUtil.fieldToNames(primaryFields));
 
-	return this.getSqlTemplate().updateRecord(sql, params, cb);
+  return this.getSqlTemplate().updateRecord(sql, params, cb);
 }</code></pre>
           <section id="batchAdd">
             <h1>batchAdd</h1>
@@ -598,53 +355,53 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport batchAdd O/R mapping objects.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchAdd = function(objects, cb) {
-	if (!objects || !objects.length) {
-		return cb();
-	}
+  if (!objects || !objects.length) {
+    return cb();
+  }
 
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var tableName = tableConfig.getTableName();
-	var fields = tableConfig.getFields(); // all fields, include primary fields
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var tableName = tableConfig.getTableName();
+  var fields = tableConfig.getFields(); // all fields, include primary fields
 
-	var type = &quot;&quot;;
-	var name = &quot;&quot;;
-	var self = this;
-	if (primaryFields.length === 1) {
-		var primaryField = primaryFields[0];
-		type = primaryField.getType();
-		name = primaryField.getName();
-		if (type === Constant.TYPE_LONG) {
-			var len = objects.length;
-			var latch = CountDownLatch.createCountDownLatch(len, function(err) {
-				if (err) {
-					return cb(err);
-				}
+  var type = &quot;&quot;;
+  var name = &quot;&quot;;
+  var self = this;
+  if (primaryFields.length === 1) {
+    var primaryField = primaryFields[0];
+    type = primaryField.getType();
+    name = primaryField.getName();
+    if (type === Constant.TYPE_LONG) {
+      var len = objects.length;
+      var latch = CountDownLatch.createCountDownLatch(len, function(err) {
+        if (err) {
+          return cb(err);
+        }
 
-				return self.doBatchAdd(objects, cb);
-			});
+        return self.doBatchAdd(objects, cb);
+      });
 
-			for (var i = 0; i &lt; objects.length; i++) {
-				(function(object) {
-					var id = object[name];
-					if (!id) {
-						self.getSqlTemplate().allocateRecordId(tableName, function(err, id) {
-							if (err) {
-								return cb(err);
-							}
+      for (var i = 0; i &lt; objects.length; i++) {
+        (function(object) {
+          var id = object[name];
+          if (!id) {
+            self.getSqlTemplate().allocateRecordId(tableName, function(err, id) {
+              if (err) {
+                return cb(err);
+              }
 
-							object[name] = id;
-							latch.done();
-						});
-					} else {
-						latch.done();
-					}
-				})(objects[i]);
-			}
-		}
-	} else {
-		return self.doBatchAdd(objects, cb);
-	}
+              object[name] = id;
+              latch.done();
+            });
+          } else {
+            latch.done();
+          }
+        })(objects[i]);
+      }
+    }
+  } else {
+    return self.doBatchAdd(objects, cb);
+  }
 }</code></pre>
           <section id="batchUpdate">
             <h1>batchUpdate</h1>
@@ -676,46 +433,46 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport batchUpdate O/R mapping objects.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchUpdate = function(objects, cb) {
-	if (!objects || !objects.length) {
-		return cb();
-	}
+  if (!objects || !objects.length) {
+    return cb();
+  }
 
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var tableName = tableConfig.getTableName();
-	var fields = tableConfig.getFields();
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var tableName = tableConfig.getTableName();
+  var fields = tableConfig.getFields();
 
-	if (primaryFields.length) {
-		var parasList = [];
+  if (primaryFields.length) {
+    var parasList = [];
 
-		for (var i = 0; i &lt; objects.length; i++) {
-			var paras = [];
-			for (var j = 0; j &lt; fields.length; j++) {
-				var field = fields[j];
-				var name = field.getName();
-				paras.push(objects[i][name]);
-			}
-			parasList.push(paras);
-		}
+    for (var i = 0; i &lt; objects.length; i++) {
+      var paras = [];
+      for (var j = 0; j &lt; fields.length; j++) {
+        var field = fields[j];
+        var name = field.getName();
+        paras.push(objects[i][name]);
+      }
+      parasList.push(paras);
+    }
 
-		var normalColumns = FieldUtil.fieldToNames(tableConfig.getNormalFields());
-		var conditionColumns = FieldUtil.fieldToNames(primaryFields);
-		var sql = SqlBuilderUtil.buildUpdateSql(tableConfig.getTableName(), normalColumns, conditionColumns);
-		return this.getSqlTemplate().batchUpdateRecords(sql, parasList, function(err, results) {
-			if (err) {
-				return cb(err);
-			}
+    var normalColumns = FieldUtil.fieldToNames(tableConfig.getNormalFields());
+    var conditionColumns = FieldUtil.fieldToNames(primaryFields);
+    var sql = SqlBuilderUtil.buildUpdateSql(tableConfig.getTableName(), normalColumns, conditionColumns);
+    return this.getSqlTemplate().batchUpdateRecords(sql, parasList, function(err, results) {
+      if (err) {
+        return cb(err);
+      }
 
-			if (results) {
-				cb(null, objects);
-			} else {
-				cb(null, null);
-			}
-		});
-	} else {
-		logger.error('can not batchUpdate object without primary key');
-		return cb();
-	}
+      if (results) {
+        cb(null, objects);
+      } else {
+        cb(null, null);
+      }
+    });
+  } else {
+    logger.error('can not batchUpdate object without primary key');
+    return cb();
+  }
 }</code></pre>
           <section id="batchDelete">
             <h1>batchDelete</h1>
@@ -747,21 +504,21 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport batchDelete O/R mapping objects.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchDelete = function(objects, cb) {
-	if (!objects || !objects.length) {
-		return cb();
-	}
+  if (!objects || !objects.length) {
+    return cb();
+  }
 
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var tableName = tableConfig.getTableName();
-	var fields = tableConfig.getFields();
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var tableName = tableConfig.getTableName();
+  var fields = tableConfig.getFields();
 
-	if (primaryFields.length) {
-		return this.batchDeleteByPrimaryKey(objects, cb);
-	} else {
-		logger.error('can not batchDelete object without primary key');
-		return cb();
-	}
+  if (primaryFields.length) {
+    return this.batchDeleteByPrimaryKey(objects, cb);
+  } else {
+    logger.error('can not batchDelete object without primary key');
+    return cb();
+  }
 }</code></pre>
           <section id="batchDeleteByPrimaryKey">
             <h1>batchDeleteByPrimaryKey</h1>
@@ -793,24 +550,24 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport batchDeleteByPrimaryKey O/R mapping objects.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchDeleteByPrimaryKey = function(objects, cb) {
-	if (!objects || !objects.length) {
-		return cb();
-	}
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var paras = [];
+  if (!objects || !objects.length) {
+    return cb();
+  }
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var paras = [];
 
-	for (var i = 0; i &lt; objects.length; i++) {
-		for (var j = 0; j &lt; primaryFields.length; j++) {
-			var primaryField = primaryFields[j];
-			var name = primaryField.getName();
-			paras.push(objects[i][name]);
-		}
-	}
+  for (var i = 0; i &lt; objects.length; i++) {
+    for (var j = 0; j &lt; primaryFields.length; j++) {
+      var primaryField = primaryFields[j];
+      var name = primaryField.getName();
+      paras.push(objects[i][name]);
+    }
+  }
 
-	var conditionColumns = FieldUtil.fieldToNames(primaryFields);
-	var sql = SqlBuilderUtil.buildBatchDeleteSql(tableConfig.getTableName(), conditionColumns, objects.length);
-	this.getSqlTemplate().updateRecord(sql, paras, cb);
+  var conditionColumns = FieldUtil.fieldToNames(primaryFields);
+  var sql = SqlBuilderUtil.buildBatchDeleteSql(tableConfig.getTableName(), conditionColumns, objects.length);
+  this.getSqlTemplate().updateRecord(sql, paras, cb);
 }</code></pre>
           <section id="updateColumn">
             <h1>updateColumn</h1>
@@ -852,28 +609,28 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport updateColumn with newValue select by primary fields.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.updateColumn = function(columnName, newValue, primarysValue, cb) {
-	if (!Array.isArray(primarysValue)) {
-		logger.error('primarysValue must be array');
-		return cb();
-	}
+  if (!Array.isArray(primarysValue)) {
+    logger.error('primarysValue must be array');
+    return cb();
+  }
 
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
 
-	if (primaryFields.length) {
-		if (primarysValue.length !== primaryFields.length) {
-			logger.error(&quot;primarysValue's size must equal with the primarykey's size&quot;);
-			return cb();
-		}
+  if (primaryFields.length) {
+    if (primarysValue.length !== primaryFields.length) {
+      logger.error(&quot;primarysValue's size must equal with the primarykey's size&quot;);
+      return cb();
+    }
 
-		var params = primarysValue;
-		var columns = FieldUtil.fieldToNames(primaryFields);
+    var params = primarysValue;
+    var columns = FieldUtil.fieldToNames(primaryFields);
 
-		return this.updateColumnValue(columnName, newValue, columns, params, cb);
-	} else {
-		logger.error('can not update object without primary key');
-		return cb();
-	}
+    return this.updateColumnValue(columnName, newValue, columns, params, cb);
+  } else {
+    logger.error('can not update object without primary key');
+    return cb();
+  }
 }</code></pre>
           <section id="updateColumnValue">
             <h1>updateColumnValue</h1>
@@ -920,23 +677,23 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport updateColumnValue with newValue select by condition fields.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.updateColumnValue = function(columnName, newValue, conditionColumns, conditionValues, cb) {
-	if (!Array.isArray(conditionColumns) || !Array.isArray(conditionValues)) {
-		logger.error('conditionColumns or conditionValues must be array');
-		return cb();
-	}
+  if (!Array.isArray(conditionColumns) || !Array.isArray(conditionValues)) {
+    logger.error('conditionColumns or conditionValues must be array');
+    return cb();
+  }
 
-	var tableConfig = this.getTableConfig();
-	var params = [];
-	params.push(newValue);
+  var tableConfig = this.getTableConfig();
+  var params = [];
+  params.push(newValue);
 
-	for (var i = 0; i &lt; conditionValues.length; i++) {
-		params.push(conditionValues[i]);
-	}
+  for (var i = 0; i &lt; conditionValues.length; i++) {
+    params.push(conditionValues[i]);
+  }
 
-	var updateColumns = [];
-	updateColumns.push(columnName);
-	var sql = SqlBuilderUtil.buildUpdateSql(tableConfig.getTableName(), updateColumns, conditionColumns);
-	return this.getSqlTemplate().updateRecord(sql, params, cb);
+  var updateColumns = [];
+  updateColumns.push(columnName);
+  var sql = SqlBuilderUtil.buildUpdateSql(tableConfig.getTableName(), updateColumns, conditionColumns);
+  return this.getSqlTemplate().updateRecord(sql, params, cb);
 }</code></pre>
           <section id="getList">
             <h1>getList</h1>
@@ -978,41 +735,41 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by sql, params.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getList = function(sql, params, options, cb) {
-	var tableConfig = this.getTableConfig();
-	var fields = tableConfig.getFields();
-	var func = tableConfig.getFunc();
-	var self = this;
+  var tableConfig = this.getTableConfig();
+  var fields = tableConfig.getFields();
+  var func = tableConfig.getFunc();
+  var self = this;
 
-	options = options || {};
-	var orderColumn = options.orderColumn;
-	var isAsc = options.isAsc;
-	var limit = options.limit;
-	var offset = options.offset;
-	var domain = options.domain;
+  options = options || {};
+  var orderColumn = options.orderColumn;
+  var isAsc = options.isAsc;
+  var limit = options.limit;
+  var offset = options.offset;
+  var domain = options.domain;
 
-	if (orderColumn) {
-		sql = SqlBuilderUtil.appendOrder(sql, orderColumn, isAsc);
-	}
+  if (orderColumn) {
+    sql = SqlBuilderUtil.appendOrder(sql, orderColumn, isAsc);
+  }
 
-	if (Utils.isNotNull(limit) &amp;&amp; Utils.isNotNull(offset)) {
-		sql = SqlBuilderUtil.appendLimit(sql, limit, offset);
-	}
+  if (Utils.isNotNull(limit) &amp;&amp; Utils.isNotNull(offset)) {
+    sql = SqlBuilderUtil.appendLimit(sql, limit, offset);
+  }
 
-	return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
-		if (err) {
-			return cb(err);
-		}
+  return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
+    if (err) {
+      return cb(err);
+    }
 
-		var beanObjects = null;
-		if (domain) {
-			var domainConfig = self.getConfig(domain);
-			beanObjects = BeanBuilderUtil.buildObjectList(results, domainConfig.getFunc(), domainConfig.getFields());
-		} else {
-			beanObjects = BeanBuilderUtil.buildObjectList(results, func, fields);
-		}
+    var beanObjects = null;
+    if (domain) {
+      var domainConfig = self.getConfig(domain);
+      beanObjects = BeanBuilderUtil.buildObjectList(results, domainConfig.getFunc(), domainConfig.getFields());
+    } else {
+      beanObjects = BeanBuilderUtil.buildObjectList(results, func, fields);
+    }
 
-		cb(null, beanObjects);
-	});
+    cb(null, beanObjects);
+  });
 }</code></pre>
           <section id="getByPrimary">
             <h1>getByPrimary</h1>
@@ -1044,27 +801,27 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by primary fields params.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByPrimary = function(params, cb) {
-	var tableConfig = this.getTableConfig();
-	var primaryFields = tableConfig.getPrimaryFields();
-	var func = tableConfig.getFunc();
+  var tableConfig = this.getTableConfig();
+  var primaryFields = tableConfig.getPrimaryFields();
+  var func = tableConfig.getFunc();
 
-	if (params.length !== primaryFields.length) {
-		logger.error('parameter size must be equal with the primary fields size');
-		return cb();
-	}
+  if (params.length !== primaryFields.length) {
+    logger.error('parameter size must be equal with the primary fields size');
+    return cb();
+  }
 
-	var fields = FieldUtil.fieldToNames(tableConfig.getFields());
-	var primaryFields = FieldUtil.fieldToNames(tableConfig.getPrimaryFields());
-	var sql = SqlBuilderUtil.buildSelectSql(tableConfig.getTableName(), fields, primaryFields);
+  var fields = FieldUtil.fieldToNames(tableConfig.getFields());
+  var primaryFields = FieldUtil.fieldToNames(tableConfig.getPrimaryFields());
+  var sql = SqlBuilderUtil.buildSelectSql(tableConfig.getTableName(), fields, primaryFields);
 
-	return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
-		if (err) {
-			return cb(err);
-		}
+  return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
+    if (err) {
+      return cb(err);
+    }
 
-		var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
-		cb(null, beanObjects);
-	});
+    var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
+    cb(null, beanObjects);
+  });
 }</code></pre>
           <section id="getById">
             <h1>getById</h1>
@@ -1096,9 +853,9 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by id.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getById = function(id, cb) {
-	var params = [id];
+  var params = [id];
 
-	return this.getByPrimary(params, cb);
+  return this.getByPrimary(params, cb);
 }</code></pre>
           <section id="get">
             <h1>get</h1>
@@ -1135,17 +892,17 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by sql, params.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.get = function(sql, params, cb) {
-	var tableConfig = this.getTableConfig();
-	var func = tableConfig.getFunc();
+  var tableConfig = this.getTableConfig();
+  var func = tableConfig.getFunc();
 
-	return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
-		if (err) {
-			return cb(err);
-		}
+  return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
+    if (err) {
+      return cb(err);
+    }
 
-		var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
-		cb(null, beanObjects);
-	});
+    var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
+    cb(null, beanObjects);
+  });
 }</code></pre>
           <section id="getCount">
             <h1>getCount</h1>
@@ -1182,7 +939,7 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getCount by sql, params.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCount = function(sql, params, cb) {
-	return this.getSqlTemplate().queryCount(sql, params, cb);
+  return this.getSqlTemplate().queryCount(sql, params, cb);
 }</code></pre>
           <section id="add">
             <h1>add</h1>
@@ -1229,11 +986,11 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport add by sql, params or by O/R mapping object.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.add = function(sql, params, cb) {
-	if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
-		return this.batchAdd([sql], params);
-	}
+  if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
+    return this.batchAdd([sql], params);
+  }
 
-	return this.getSqlTemplate().addRecord(sql, params, cb);
+  return this.getSqlTemplate().addRecord(sql, params, cb);
 }</code></pre>
           <section id="delete">
             <h1>delete</h1>
@@ -1280,11 +1037,11 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport delete by sql, params or by O/R mapping object.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.delete = function(sql, params, cb) {
-	if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
-		return this.batchDelete([sql], params);
-	}
+  if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
+    return this.batchDelete([sql], params);
+  }
 
-	return this.getSqlTemplate().updateRecord(sql, params, cb);
+  return this.getSqlTemplate().updateRecord(sql, params, cb);
 }</code></pre>
           <section id="update">
             <h1>update</h1>
@@ -1331,11 +1088,11 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport update by sql, params or by O/R mapping object.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.update = function(sql, params, cb) {
-	if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
-		return this.batchUpdate([sql], params);
-	}
+  if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
+    return this.batchUpdate([sql], params);
+  }
 
-	return this.getSqlTemplate().updateRecord(sql, params, cb);
+  return this.getSqlTemplate().updateRecord(sql, params, cb);
 }</code></pre>
           <section id="exists">
             <h1>exists</h1>
@@ -1372,7 +1129,7 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport exists by sql, params or by O/R mapping object.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.exists = function(sql, params, cb) {
-	return this.getSqlTemplate().existRecord(sql, params, cb);
+  return this.getSqlTemplate().existRecord(sql, params, cb);
 }</code></pre>
           <section id="allocateRecordId">
             <h1>allocateRecordId</h1>
@@ -1404,7 +1161,7 @@ module.exports = DomainDaoSupport;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport allocate recordId for table.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.allocateRecordId = function(tableName, cb) {
-	return this.getSqlTemplate().allocateRecordId(tableName, cb);
+  return this.getSqlTemplate().allocateRecordId(tableName, cb);
 }
 
 var SQL_SELECT = &quot;SELECT * FROM %s WHERE %s &quot;;
@@ -1449,11 +1206,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by where.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByWhere = function(where, args, cb) {
-	var tableConfig = this.getTableConfig();
+  var tableConfig = this.getTableConfig();
 
-	var sql = util.format(SQL_OBJECT_SELECT, tableConfig.getTableName(), where);
+  var sql = util.format(SQL_OBJECT_SELECT, tableConfig.getTableName(), where);
 
-	return this.get(sql, args, cb);
+  return this.get(sql, args, cb);
 }</code></pre>
           <section id="getListByWhere">
             <h1>getListByWhere</h1>
@@ -1495,32 +1252,32 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getList by where.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getListByWhere = function(where, args, options, cb) {
-	var tableConfig = this.getTableConfig();
+  var tableConfig = this.getTableConfig();
 
-	var sql = util.format(SQL_SELECT, tableConfig.getTableName(), where);
+  var sql = util.format(SQL_SELECT, tableConfig.getTableName(), where);
 
-	options = options || {};
-	var orderColumn = options.orderColumn;
-	var isAsc = options.isAsc;
-	var limit = options.limit;
-	var offset = options.offset;
-	var domain = options.domain;
+  options = options || {};
+  var orderColumn = options.orderColumn;
+  var isAsc = options.isAsc;
+  var limit = options.limit;
+  var offset = options.offset;
+  var domain = options.domain;
 
-	var opt = {};
+  var opt = {};
 
-	if (orderColumn) {
-		sql = SqlBuilderUtil.appendOrder(sql, orderColumn, isAsc);
-	}
+  if (orderColumn) {
+    sql = SqlBuilderUtil.appendOrder(sql, orderColumn, isAsc);
+  }
 
-	if (Utils.isNotNull(limit) &amp;&amp; Utils.isNotNull(offset)) {
-		sql = SqlBuilderUtil.appendLimit(sql, limit, offset);
-	}
+  if (Utils.isNotNull(limit) &amp;&amp; Utils.isNotNull(offset)) {
+    sql = SqlBuilderUtil.appendLimit(sql, limit, offset);
+  }
 
-	if (domain) {
-		opt['domain'] = domain;
-	}
+  if (domain) {
+    opt['domain'] = domain;
+  }
 
-	return this.getList(sql, args, opt, cb);
+  return this.getList(sql, args, opt, cb);
 }</code></pre>
           <section id="getCountByWhere">
             <h1>getCountByWhere</h1>
@@ -1557,11 +1314,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport getCount by where.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCountByWhere = function(where, args, cb) {
-	var tableConfig = this.getTableConfig();
+  var tableConfig = this.getTableConfig();
 
-	var sql = util.format(SQL_COUNT_SELECT, tableConfig.getTableName(), where);
+  var sql = util.format(SQL_COUNT_SELECT, tableConfig.getTableName(), where);
 
-	return this.getCount(sql, args, cb);
+  return this.getCount(sql, args, cb);
 }</code></pre>
           <section id="removeByWhere">
             <h1>removeByWhere</h1>
@@ -1598,11 +1355,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport remove by where.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.removeByWhere = function(where, args, cb) {
-	var tableConfig = this.getTableConfig();
+  var tableConfig = this.getTableConfig();
 
-	var sql = util.format(REMOVE_OBJECT_SELECT, tableConfig.getTableName(), where);
+  var sql = util.format(REMOVE_OBJECT_SELECT, tableConfig.getTableName(), where);
 
-	return this.delete(sql, args, cb);
+  return this.delete(sql, args, cb);
 }</code></pre>
           <section id="addToCache">
             <h1>addToCache</h1>
@@ -1639,7 +1396,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport add to cache.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.addToCache = function(key, value, expire) {
-	return this.getCacheTemplate().addToCache(key, value, expire);
+  return this.getCacheTemplate().addToCache(key, value, expire);
 }</code></pre>
           <section id="getStringFromCache">
             <h1>getStringFromCache</h1>
@@ -1671,7 +1428,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport get from cache.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getStringFromCache = function(key, cb) {
-	return this.getCacheTemplate().getString(key, cb);
+  return this.getCacheTemplate().getString(key, cb);
 }</code></pre>
           <section id="setCounter">
             <h1>setCounter</h1>
@@ -1708,7 +1465,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport set counter to cache.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.setCounter = function(key, initCount, expire) {
-	return this.getCacheTemplate().setCounter(key, initCount, expire);
+  return this.getCacheTemplate().setCounter(key, initCount, expire);
 }</code></pre>
           <section id="getCounter">
             <h1>getCounter</h1>
@@ -1740,7 +1497,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport get counter from cache.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCounter = function(key, cb) {
-	return this.getCacheTemplate().getCounter(key, cb);
+  return this.getCacheTemplate().getCounter(key, cb);
 }</code></pre>
           <section id="incr">
             <h1>incr</h1>
@@ -1767,7 +1524,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport incr counter by 1.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incr = function(key) {
-	return this.getCacheTemplate().incr(key)
+  return this.getCacheTemplate().incr(key)
 }</code></pre>
           <section id="incrBy">
             <h1>incrBy</h1>
@@ -1799,7 +1556,7 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport incr counter by increment.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incrBy = function(key, increment) {
-	return this.getCacheTemplate().incrBy(key, increment);
+  return this.getCacheTemplate().incrBy(key, increment);
 }</code></pre>
           <section id="removeFromCache">
             <h1>removeFromCache</h1>
@@ -1826,17 +1583,17 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
           </table>
           <div class="description"><p>DomainDaoSupport remove from cache.</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.removeFromCache = function(key) {
-	return this.getCacheTemplate().delFromCache(key);
+  return this.getCacheTemplate().delFromCache(key);
 }</code></pre>
         </div>
       </div>
     </div>
     <footer class="footer">
-      <!--div class="container">
+      <div class="container">
         <p>Documentation generated with<a href="https://github.com/FGRibreau/doxx">Doxx</a>created by<a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau</a></p>
         <p>Doxx is sponsored by<a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr</a>and<a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
         <p>Theme borrowed from Twitter Bootstrap</p>
-      </div-->
+      </div>
     </footer>
     <script src="javascripts/widgets.js"></script>
     <script src="javascripts/jquery.min.js"></script>

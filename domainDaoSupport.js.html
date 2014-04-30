@@ -101,6 +101,8 @@
               </li>
               <li><a href="#initConfig"><i class="alert alert-info"></i><span>initConfig</span></a>
               </li>
+              <li><a href="#getConfig"><i class="alert alert-info"></i><span>getConfig</span></a>
+              </li>
               <li><a href="#transaction"><i class="alert alert-info"></i><span>transaction</span></a>
               </li>
               <li><a href="#deleteById"><i class="alert alert-info"></i><span>deleteById</span></a>
@@ -112,8 +114,6 @@
               <li><a href="#batchUpdate"><i class="alert alert-info"></i><span>batchUpdate</span></a>
               </li>
               <li><a href="#batchDelete"><i class="alert alert-info"></i><span>batchDelete</span></a>
-              </li>
-              <li><a href="#batchDeleteByPrimaryKey"><i class="alert alert-info"></i><span>batchDeleteByPrimaryKey</span></a>
               </li>
               <li><a href="#updateColumn"><i class="alert alert-info"></i><span>updateColumn</span></a>
               </li>
@@ -202,9 +202,31 @@ module.exports = DomainDaoSupport;</code></pre>
                 <td>Object</td>
                 <td>domain O/R mapping configuration</td>
               </tr>
+              <tr>
+                <td>domainConfig.func</td>
+                <td>Function</td>
+                <td>domain constructor function</td>
+              </tr>
+              <tr>
+                <td>domainConfig.tableName</td>
+                <td>String</td>
+                <td>O/R mapping tableName</td>
+              </tr>
+              <tr>
+                <td>domainConfig.primary</td>
+                <td>Array</td>
+                <td>primary fields array</td>
+              </tr>
+              <tr>
+                <td>domainConfig.fields</td>
+                <td>Array</td>
+                <td>normal fields array</td>
+              </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport domain O/R mapping configuration.</p> </div>
+          <div class="description"><p>DomainDaoSupport domain O/R mapping configuration.<br />init domainDaoSupport with domainConfig to set up O/R mapping</p>
+
+<p>用domainConfig来初始化domainDaoSupport来设置O/R mapping</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.initConfig = function(domainConfig) {
   var func = domainConfig.func;
   var tableName = domainConfig.tableName;
@@ -225,6 +247,80 @@ module.exports = DomainDaoSupport;</code></pre>
   tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
   tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
   this.setTableConfig(tableConfig);
+}</code></pre>
+          <section id="getConfig">
+            <h1>getConfig</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.getConfig()</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>domainConfig</td>
+                <td>Object</td>
+                <td>domain O/R mapping configuration</td>
+              </tr>
+              <tr>
+                <td>domainConfig.func</td>
+                <td>Function</td>
+                <td>domain constructor function</td>
+              </tr>
+              <tr>
+                <td>domainConfig.key</td>
+                <td>String</td>
+                <td>domain cache key</td>
+              </tr>
+              <tr>
+                <td>domainConfig.primary</td>
+                <td>Array</td>
+                <td>primary fields array</td>
+              </tr>
+              <tr>
+                <td>domainConfig.fields</td>
+                <td>Array</td>
+                <td>normal fields array</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>DomainDaoSupport get domain O/R mapping configuration.<br />get domainConfig when doing multi table query</p>
+
+<p>多表查询的时候获取domainConfig</p> </div>
+          <pre><code class="language-javascript">DomainDaoSupport.prototype.getConfig = function(domainConfig) {
+  var func = domainConfig.func;
+  var key = domainConfig.key;
+  var primaryFields = domainConfig.primary || [];
+  var fields = domainConfig.fields || [];
+  if (!Utils.checkFunction(func)) {
+    logger.error('domain object have no OR mapping info ' + domainConfig);
+    return;
+  }
+
+  if (key) {
+    var domain = this.getDomainMap(key);
+    if (domain) {
+      return domain;
+    }
+  }
+
+  var tableConfig = new TableConfig();
+  tableConfig.setFunc(func);
+  tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
+  tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
+
+  if (key) {
+    this.setDomainMap(key, tableConfig);
+  }
+
+  return tableConfig;
 }</code></pre>
           <section id="transaction">
             <h1>transaction</h1>
@@ -249,7 +345,16 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport do transaction with transactionStatus.</p> </div>
+          <div class="description"><p>DomainDaoSupport do transaction with transactionStatus.<br />transaction should be in transaction context to hold the same connection.<br />dao should implement this method to keep the transaction context.</p>
+
+<p>事务需要在同一个connection中完成,这点由transactionStatus来保证<br />dao 需要实现 transaction 方法，来把transactionStatus表示的事务状态传给底层的sqlTemplate</p>
+
+<pre><code class="language-javascript">
+SimpleDao.prototype.transaction = function(txStatus) {
+    this.domainDaoSupport.transaction(txStatus);
+    return this;
+}
+</code></pre> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.transaction = function(transactionStatus) {
   return this.getSqlTemplate().transaction(transactionStatus);
 }</code></pre>
@@ -281,7 +386,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport deleteById field id.</p> </div>
+          <div class="description"><p>DomainDaoSupport deleteById field id.<br />id must be the unique primary key </p>
+
+<p>id 必须是唯一主键</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.deleteById = function(id, cb) {
   var params = [id];
 
@@ -315,7 +422,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport deleteByPrimaryKey.</p> </div>
+          <div class="description"><p>DomainDaoSupport deleteByPrimaryKey.<br />params fields must be corresponded to what your domain defines primary fields</p>
+
+<p>params 参数的顺序必须和domain里面主键定义的顺序相对应</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.deleteByPrimaryKey = function(params, cb) {
   var tableConfig = this.getTableConfig();
   var primaryFields = tableConfig.getPrimaryFields();
@@ -353,7 +462,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchAdd O/R mapping objects.</p> </div>
+          <div class="description"><p>DomainDaoSupport batchAdd O/R mapping objects.<br />objects are O/R mapping domain instances array<br />if primary field is single and its type is Long<br />you do not need set this field when batchAdd<br />bearcat-dao will generate this unique id for your objects</p>
+
+<p>objects 是O/R mapping对应的domain对象实例数组 <br />如果主键是唯一的类型为Long的,通常情况下这个是一个自增的字段<br />这时batchAdd的domain对象可以不设置该字段的值<br />bearcat-dao 会为这些domain对象生成唯一的id值 </p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchAdd = function(objects, cb) {
   if (!objects || !objects.length) {
     return cb();
@@ -431,7 +542,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchUpdate O/R mapping objects.</p> </div>
+          <div class="description"><p>DomainDaoSupport batchUpdate O/R mapping objects.<br />domain objects fields must be fullfilled when batchUpdate<br />a good practise is update what you get </p>
+
+<p>当batchUpdate的时候，domain对象的所有属性必须都有值<br />一个好的实践就是更新你所查询的domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchUpdate = function(objects, cb) {
   if (!objects || !objects.length) {
     return cb();
@@ -502,7 +615,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchDelete O/R mapping objects.</p> </div>
+          <div class="description"><p>DomainDaoSupport batchDelete O/R mapping objects.<br />doamin objects primary fields must be fullfilled</p>
+
+<p>domain 对象的主键字段对应的值必须要有</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchDelete = function(objects, cb) {
   if (!objects || !objects.length) {
     return cb();
@@ -519,55 +634,6 @@ module.exports = DomainDaoSupport;</code></pre>
     logger.error('can not batchDelete object without primary key');
     return cb();
   }
-}</code></pre>
-          <section id="batchDeleteByPrimaryKey">
-            <h1>batchDeleteByPrimaryKey</h1>
-            <h5 class="subheader"></h5>
-            <p>
-              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.batchDeleteByPrimaryKey()</span>
-            </p>
-          </section>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width:20%">Option name</th>
-                <th style="width:20%">Type</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>objects</td>
-                <td>Array</td>
-                <td>O/R mapping objects</td>
-              </tr>
-              <tr>
-                <td>cb</td>
-                <td>Function</td>
-                <td>callback function</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="description"><p>DomainDaoSupport batchDeleteByPrimaryKey O/R mapping objects.</p> </div>
-          <pre><code class="language-javascript">DomainDaoSupport.prototype.batchDeleteByPrimaryKey = function(objects, cb) {
-  if (!objects || !objects.length) {
-    return cb();
-  }
-  var tableConfig = this.getTableConfig();
-  var primaryFields = tableConfig.getPrimaryFields();
-  var paras = [];
-
-  for (var i = 0; i &lt; objects.length; i++) {
-    for (var j = 0; j &lt; primaryFields.length; j++) {
-      var primaryField = primaryFields[j];
-      var name = primaryField.getName();
-      paras.push(objects[i][name]);
-    }
-  }
-
-  var conditionColumns = FieldUtil.fieldToNames(primaryFields);
-  var sql = SqlBuilderUtil.buildBatchDeleteSql(tableConfig.getTableName(), conditionColumns, objects.length);
-  this.getSqlTemplate().updateRecord(sql, paras, cb);
 }</code></pre>
           <section id="updateColumn">
             <h1>updateColumn</h1>
@@ -607,7 +673,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport updateColumn with newValue select by primary fields.</p> </div>
+          <div class="description"><p>DomainDaoSupport updateColumn with newValue select by primary fields.</p>
+
+<p>以主键作为查询条件来更新某个字段的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.updateColumn = function(columnName, newValue, primarysValue, cb) {
   if (!Array.isArray(primarysValue)) {
     logger.error('primarysValue must be array');
@@ -675,7 +743,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport updateColumnValue with newValue select by condition fields.</p> </div>
+          <div class="description"><p>DomainDaoSupport updateColumnValue with newValue select by condition fields.</p>
+
+<p>以查询条件字段作为查询条件来更新某个字段的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.updateColumnValue = function(columnName, newValue, conditionColumns, conditionValues, cb) {
   if (!Array.isArray(conditionColumns) || !Array.isArray(conditionValues)) {
     logger.error('conditionColumns or conditionValues must be array');
@@ -727,13 +797,42 @@ module.exports = DomainDaoSupport;</code></pre>
                 <td></td>
               </tr>
               <tr>
+                <td>options.orderColumn</td>
+                <td>String</td>
+                <td>order column name</td>
+              </tr>
+              <tr>
+                <td>options.isAsc</td>
+                <td>Boolean</td>
+                <td>sort asc ?</td>
+              </tr>
+              <tr>
+                <td>options.limit</td>
+                <td>Number</td>
+                <td>limit number</td>
+              </tr>
+              <tr>
+                <td>options.offset</td>
+                <td>Number</td>
+                <td>offset number</td>
+              </tr>
+              <tr>
+                <td>options.domain</td>
+                <td>Object</td>
+                <td>domain configuration when doing multi table query</td>
+              </tr>
+              <tr>
                 <td>cb</td>
                 <td>Function</td>
                 <td>callback function</td>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by sql, params.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by sql, params.</p>
+
+<p>select by sql, query params, and the result will be mapped to O/R mapping domain objects<br />in options you can pass to set order, limit, offset<br />when doing multi table query, you must pass domain to options, domain is what you define for your muti query O/R mapping domain</p>
+
+<p>根据sql，params来进行查询，查询结果会O/R mapping到domain对象<br />在options里，你可以传入order,limit,offset<br />当要进行多表联合查询的时候，必须在options里传入domain，domain就是你想要进行多表联合查询所对应的O/R mapping对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getList = function(sql, params, options, cb) {
   var tableConfig = this.getTableConfig();
   var fields = tableConfig.getFields();
@@ -799,7 +898,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by primary fields params.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by primary fields params.<br />params fields must be corresponded to what your domain defines primary fields</p>
+
+<p>params 参数的顺序必须和domain里面主键定义的顺序相对应<br />根据主键来进行查询列表</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByPrimary = function(params, cb) {
   var tableConfig = this.getTableConfig();
   var primaryFields = tableConfig.getPrimaryFields();
@@ -851,7 +952,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by id.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by id.<br />id must be the unique primary key </p>
+
+<p>id 必须是唯一主键</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getById = function(id, cb) {
   var params = [id];
 
@@ -890,7 +993,11 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by sql, params.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by sql, params.</p>
+
+<p>select by sql, query params, and the result will be mapped to O/R mapping domain objects</p>
+
+<p>根据sql，params来进行查询，查询结果会O/R mapping到domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.get = function(sql, params, cb) {
   var tableConfig = this.getTableConfig();
   var func = tableConfig.getFunc();
@@ -937,7 +1044,11 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getCount by sql, params.</p> </div>
+          <div class="description"><p>DomainDaoSupport getCount by sql, params.</p>
+
+<p>select count by sql, query params</p>
+
+<p>根据sql，params来查询数量</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCount = function(sql, params, cb) {
   return this.getSqlTemplate().queryCount(sql, params, cb);
 }</code></pre>
@@ -980,11 +1091,13 @@ module.exports = DomainDaoSupport;</code></pre>
               <tr>
                 <td>cb</td>
                 <td>Function</td>
-                <td>callback function</td>
+                <td>callback function </td>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport add by sql, params or by O/R mapping object.</p> </div>
+          <div class="description"><p>DomainDaoSupport add by sql, params or by O/R mapping object.</p>
+
+<p>通过sql，params来添加数据 或者 通过 O/R mapping 的 domain object 对象来添加数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.add = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchAdd([sql], params);
@@ -1035,7 +1148,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport delete by sql, params or by O/R mapping object.</p> </div>
+          <div class="description"><p>DomainDaoSupport delete by sql, params or by O/R mapping object.</p>
+
+<p>通过sql，params来删除数据 或者 通过 O/R mapping 的 domain object 对象来删除数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.delete = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchDelete([sql], params);
@@ -1086,7 +1201,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport update by sql, params or by O/R mapping object.</p> </div>
+          <div class="description"><p>DomainDaoSupport update by sql, params or by O/R mapping object.</p>
+
+<p>通过sql，params来更新数据 或者 通过 O/R mapping 的 domain object 对象来更新数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.update = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchUpdate([sql], params);
@@ -1127,7 +1244,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport exists by sql, params or by O/R mapping object.</p> </div>
+          <div class="description"><p>DomainDaoSupport exists by sql, params.<br />if exist, result will true, otherwise result will false</p>
+
+<p>如果存在，cb结果是true，否则是false</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.exists = function(sql, params, cb) {
   return this.getSqlTemplate().existRecord(sql, params, cb);
 }</code></pre>
@@ -1159,7 +1278,9 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport allocate recordId for table.</p> </div>
+          <div class="description"><p>DomainDaoSupport allocate recordId for table.</p>
+
+<p>为表申请主键id的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.allocateRecordId = function(tableName, cb) {
   return this.getSqlTemplate().allocateRecordId(tableName, cb);
 }
@@ -1204,7 +1325,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by where.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by where.</p>
+
+<p>select by where sql, query params, and the result will be mapped to O/R mapping domain objects</p>
+
+<p>根据where查询sql，params来进行查询，查询结果会O/R mapping到domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByWhere = function(where, args, cb) {
   var tableConfig = this.getTableConfig();
 
@@ -1244,13 +1369,42 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
                 <td></td>
               </tr>
               <tr>
+                <td>options.orderColumn</td>
+                <td>String</td>
+                <td>order column name</td>
+              </tr>
+              <tr>
+                <td>options.isAsc</td>
+                <td>Boolean</td>
+                <td>sort asc ?</td>
+              </tr>
+              <tr>
+                <td>options.limit</td>
+                <td>Number</td>
+                <td>limit number</td>
+              </tr>
+              <tr>
+                <td>options.offset</td>
+                <td>Number</td>
+                <td>offset number</td>
+              </tr>
+              <tr>
+                <td>options.domain</td>
+                <td>Object</td>
+                <td>domain configuration when doing multi table query</td>
+              </tr>
+              <tr>
                 <td>cb</td>
                 <td>Function</td>
                 <td>callback function</td>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by where.</p> </div>
+          <div class="description"><p>DomainDaoSupport getList by where.</p>
+
+<p>select by where sql, query params, and the result will be mapped to O/R mapping domain objects<br />in options you can pass to set order, limit, offset<br />when doing multi table query, you must pass domain to options, domain is what you define for your muti query O/R mapping domain</p>
+
+<p>根据where查询sql，params来进行查询，查询结果会O/R mapping到domain对象<br />在options里，你可以传入order,limit,offset<br />当要进行多表联合查询的时候，必须在options里传入domain，domain就是你想要进行多表联合查询所对应的O/R mapping对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getListByWhere = function(where, args, options, cb) {
   var tableConfig = this.getTableConfig();
 
@@ -1312,7 +1466,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getCount by where.</p> </div>
+          <div class="description"><p>DomainDaoSupport getCount by where.</p>
+
+<p>select count by where sql, query params</p>
+
+<p>根据where查询sql，params来查询数量</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCountByWhere = function(where, args, cb) {
   var tableConfig = this.getTableConfig();
 
@@ -1353,7 +1511,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport remove by where.</p> </div>
+          <div class="description"><p>DomainDaoSupport remove by where.</p>
+
+<p>remove by where sql, query params</p>
+
+<p>根据where查询sql，params来进行删除</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.removeByWhere = function(where, args, cb) {
   var tableConfig = this.getTableConfig();
 
@@ -1394,7 +1556,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport add to cache.</p> </div>
+          <div class="description"><p>DomainDaoSupport add to cache.</p>
+
+<p>add key:value cache, if pass expire, it will set expire time in seconds</p>
+
+<p>添加key:value缓存,如果传了expire，则会设置expire的过期时间, expire单位为秒</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.addToCache = function(key, value, expire) {
   return this.getCacheTemplate().addToCache(key, value, expire);
 }</code></pre>
@@ -1426,7 +1592,9 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport get from cache.</p> </div>
+          <div class="description"><p>DomainDaoSupport get from cache.</p>
+
+<p>通过key来查询string value</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getStringFromCache = function(key, cb) {
   return this.getCacheTemplate().getString(key, cb);
 }</code></pre>
@@ -1463,7 +1631,11 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport set counter to cache.</p> </div>
+          <div class="description"><p>DomainDaoSupport set counter to cache.</p>
+
+<p>set counter with initCount, if pass expire, it will set expire time in seconds</p>
+
+<p>设置一个计数器，初始值为InitCount, 如果传了expire，则会设置expire的过期时间, expire单位为秒</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.setCounter = function(key, initCount, expire) {
   return this.getCacheTemplate().setCounter(key, initCount, expire);
 }</code></pre>
@@ -1495,7 +1667,9 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport get counter from cache.</p> </div>
+          <div class="description"><p>DomainDaoSupport get counter from cache.</p>
+
+<p>查询key对应的计数器的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getCounter = function(key, cb) {
   return this.getCacheTemplate().getCounter(key, cb);
 }</code></pre>
@@ -1522,7 +1696,9 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport incr counter by 1.</p> </div>
+          <div class="description"><p>DomainDaoSupport incr counter by 1.</p>
+
+<p>计数器增加值1 </p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incr = function(key) {
   return this.getCacheTemplate().incr(key)
 }</code></pre>
@@ -1554,7 +1730,9 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport incr counter by increment.</p> </div>
+          <div class="description"><p>DomainDaoSupport incr counter by increment.</p>
+
+<p>计数器增加值increment </p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incrBy = function(key, increment) {
   return this.getCacheTemplate().incrBy(key, increment);
 }</code></pre>
@@ -1581,7 +1759,9 @@ var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport remove from cache.</p> </div>
+          <div class="description"><p>DomainDaoSupport remove from cache.</p>
+
+<p>从cache删除key对应的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.removeFromCache = function(key) {
   return this.getCacheTemplate().delFromCache(key);
 }</code></pre>

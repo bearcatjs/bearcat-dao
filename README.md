@@ -32,7 +32,7 @@ more in details:
 * func : constructor function for the domain object
 * primary : an array defines primary fields  
 * fields : an array defines fields except primary fields  
-  - field can be defined by object with ***name***, ***type*** properties, or simply by name string  
+  - field can be defined by object with ***name***, ***type*** properties, or simply by ***name*** string  
 * tableName : the name of table to be mapped by the ORM object  
 * key : the cached key for conjunctive query domain definition  
 
@@ -41,10 +41,13 @@ more in details:
 npm install bearcat-dao --save
 ```  
 
-add beanDefinition to context.json used by your project  
+modify context.json used by your project  
 [placeholds](https://github.com/bearcatnode/bearcat/wiki/Consistent-configuration) can be nicely used to switch between contexts  
 
 ```
+"dependencies": {
+	"bearcat-dao": "*"
+},
 "beans": [{
 		"id": "mysqlConnectionManager",
 		"func": "node_modules.bearcat-dao.lib.connection.sql.mysqlConnectionManager",
@@ -114,8 +117,37 @@ module.exports = {
 }
 ```
 
-something more about [domainDaoSupport](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html)  
+api reference for [domainDaoSupport](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html)  
 
+## Transaction
+Bearcat-dao provides transaction support based on [Bearcat AOP](https://github.com/bearcatnode/bearcat/wiki/Aspect-Object-Programming). The aspect is [transactionAspect](https://github.com/bearcatnode/bearcat-dao/blob/master/lib/aspect/transactionAspect.js) which provides around advice, when target transaction method calls cb function with ***err***, rollback will be emited, otherwise it will commit the operations.  
+The pointcut defined is:  
+```
+"pointcut": "around:.*?Transaction"
+```  
+Therefore, any POJO method match this pointcut can a transcation method  
+Since transaction must be within the same connection, in Bearcat-dao it is ***transactionStatus***, daos under the transaction method must hold the same transactionStatus  
+```
+SimpleService.prototype.testMethodTransaction = function(cb, txStatus) {
+	var self = this;
+	this.simpleDao.transaction(txStatus).addPerson(['aaa'], function(err, results) {
+		if (err) {
+			return cb(err); // if err occur, rollback will be emited
+		}
+		self.simpleDao.transaction(txStatus).getList([1, 2], function(err, results) {
+			if (err) { 
+				return cb(err); // if err occur, rollback will be emited
+			}
+			cb(null, results); // commit the operations
+		});
+	});
+}
+```
+
+## Multi tables query
+When doing querys, by default the mapping domain is what you pass into [domainDaoSupport.initConfig](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#initConfig) method  
+In [domainDaoSupport.getList](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getList) and [domainDaoSupport.getListByWhere](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getListByWhere) method, you can pass mutli table specified domain to options to support O/R mapping when doing multi tables query.  
+This domain is almost the same as [init domain](https://github.com/bearcatnode/bearcat-dao#domain-definition), except for the ***key*** specified as the cache key for this domain, and without needing to specify the ***tableName***
 
 ## License
 

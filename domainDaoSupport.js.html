@@ -1283,15 +1283,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
 <p>为表申请主键id的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.allocateRecordId = function(tableName, cb) {
   return this.getSqlTemplate().allocateRecordId(tableName, cb);
-}
-
-var SQL_SELECT = &quot;SELECT * FROM %s WHERE %s &quot;;
-
-var SQL_COUNT_SELECT = &quot;SELECT count(*) num FROM %s WHERE %s &quot;;
-
-var SQL_OBJECT_SELECT = &quot;SELECT * FROM %s WHERE %s &quot;;
-
-var REMOVE_OBJECT_SELECT = &quot;DELETE FROM %s WHERE %s &quot;;</code></pre>
+}</code></pre>
           <section id="getByWhere">
             <h1>getByWhere</h1>
             <h5 class="subheader"></h5>

@@ -114,7 +114,7 @@ module.exports = {
 }
 ```
 
-something more about [domainDaoSupport]()  
+something more about [domainDaoSupport](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html)  
 
 
 ## License

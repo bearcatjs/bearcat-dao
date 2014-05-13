@@ -67,7 +67,7 @@
 			"ref": "dbTransactionManager"
 		}],
 		"aop": [{
-			"pointcut": "around:.*?Transaction",
+			"pointcut": "around:.*?Transaction$",
 			"advice": "doInTransaction"
 		}]
 	}, {

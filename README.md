@@ -123,7 +123,7 @@ api reference for [domainDaoSupport](http://bearcatnode.github.io/bearcat-dao/do
 Bearcat-dao provides transaction support based on [Bearcat AOP](https://github.com/bearcatnode/bearcat/wiki/Aspect-Object-Programming). The aspect is [transactionAspect](https://github.com/bearcatnode/bearcat-dao/blob/master/lib/aspect/transactionAspect.js) which provides around advice, when target transaction method calls cb function with ***err***, rollback will be emited, otherwise it will commit the operations.  
 The pointcut defined is:  
 ```
-"pointcut": "around:.*?Transaction"
+"pointcut": "around:.*?Transaction$"
 ```  
 Therefore, any POJO method match this pointcut can a transcation method  
 Since transaction must be within the same connection, in Bearcat-dao it is ***transactionStatus***, daos under the transaction method must hold the same transactionStatus  
@@ -148,6 +148,10 @@ SimpleService.prototype.testMethodTransaction = function(cb, txStatus) {
 When doing querys, by default the mapping domain is what you pass into [domainDaoSupport.initConfig](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#initConfig) method  
 In [domainDaoSupport.getList](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getList) and [domainDaoSupport.getListByWhere](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getListByWhere) method, you can pass mutli table specified domain to options to support O/R mapping when doing multi tables query.  
 This domain is almost the same as [init domain](https://github.com/bearcatnode/bearcat-dao#domain-definition), except for the ***key*** specified as the cache key for this domain, and without needing to specify the ***tableName***
+
+## Examples
+- [bearcat-todo](https://github.com/bearcatnode/todo) 
+the tutorial is [bearcat-todo-tutorial](https://github.com/bearcatnode/bearcat/wiki/web-mvc-todo)  
 
 ## License
 

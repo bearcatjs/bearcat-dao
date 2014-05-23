@@ -10,7 +10,8 @@
 		}, {
 			"name": "cacheTemplate",
 			"ref": "cacheTemplate"
-		}]
+		}],
+		"proxy": false
 	}, {
 		"id": "sqlTemplate",
 		"func": "lib.template.sql.mysqlTemplate",

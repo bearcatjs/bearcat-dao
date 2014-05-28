@@ -130,11 +130,11 @@ Since transaction must be within the same connection, in Bearcat-dao it is ***tr
 ```
 SimpleService.prototype.testMethodTransaction = function(cb, txStatus) {
 	var self = this;
-	this.simpleDao.transaction(txStatus).addPerson(['aaa'], function(err, results) {
+	this.simpleDao1.transaction(txStatus).addPerson(['aaa'], function(err, results) {
 		if (err) {
 			return cb(err); // if err occur, rollback will be emited
 		}
-		self.simpleDao.transaction(txStatus).getList([1, 2], function(err, results) {
+		self.simpleDao2.transaction(txStatus).getList([1, 2], function(err, results) {
 			if (err) { 
 				return cb(err); // if err occur, rollback will be emited
 			}

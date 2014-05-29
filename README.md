@@ -152,16 +152,18 @@ This domain is almost the same as [init domain](https://github.com/bearcatnode/b
 ## Using with [pomelo-sync](https://github.com/NetEase/pomelo-sync)
 In [pomelo](https://github.com/NetEase/pomelo) you can use [pomelo-sync-plugin](https://github.com/NetEase/pomelo-sync-plugin) for convenience  
 
+update npm  
 ```
 npm install pomelo-sync-plugin --save
 ```
 
+add with app.js  
 ```
 var sync = require('pomelo-sync-plugin');
 app.use(sync, {sync: {path:__dirname + '/app/dao/mapping', dbclient: {}}});
 ``` 
 
-we now use bearcat-dao to handle db operations there dbclient can an empty object to be compatible for pomelo-sync(in pomelo-sync dbclient must be passed)  
+we now use bearcat-dao to handle db operations, therefor dbclient can an empty object to be compatible for pomelo-sync(in pomelo-sync dbclient must be passed)  
 
 then in your application app/dao/mapping directory, you can write mappings  
 
@@ -190,28 +192,3 @@ references:
 ## Examples
 - [bearcat-todo](https://github.com/bearcatnode/todo) 
 the tutorial is [bearcat-todo-tutorial](https://github.com/bearcatnode/bearcat/wiki/web-mvc-todo)  
-
-## License
-
-(The MIT License)
-
-Copyright (c) fantasyni and other contributors
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

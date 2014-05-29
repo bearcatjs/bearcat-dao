@@ -149,6 +149,44 @@ When doing querys, by default the mapping domain is what you pass into [domainDa
 In [domainDaoSupport.getList](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getList) and [domainDaoSupport.getListByWhere](http://bearcatnode.github.io/bearcat-dao/domainDaoSupport.js.html#getListByWhere) method, you can pass mutli table specified domain to options to support O/R mapping when doing multi tables query.  
 This domain is almost the same as [init domain](https://github.com/bearcatnode/bearcat-dao#domain-definition), except for the ***key*** specified as the cache key for this domain, and without needing to specify the ***tableName***
 
+## Using with [pomelo-sync](https://github.com/NetEase/pomelo-sync)
+In [pomelo](https://github.com/NetEase/pomelo) you can use [pomelo-sync-plugin](https://github.com/NetEase/pomelo-sync-plugin) for convenience  
+
+```
+npm install pomelo-sync-plugin --save
+```
+
+```
+var sync = require('pomelo-sync-plugin');
+app.use(sync, {sync: {path:__dirname + '/app/dao/mapping', dbclient: {}}});
+``` 
+
+we now use bearcat-dao to handle db operations there dbclient can an empty object to be compatible for pomelo-sync(in pomelo-sync dbclient must be passed)  
+
+then in your application app/dao/mapping directory, you can write mappings  
+
+helloSync.js
+```
+var bearcat = require('bearcat');
+var helloSync = {};
+
+module.exports = helloSync;
+
+helloSync.hello = function(dbclient, val, cb) {
+	var helloService = bearcat.getBean('hello'); // get your service object from bearcat and just call the function
+	return helloService.doHello(val, cb);
+}
+```
+
+then add pomelo-sync exec  
+```
+app.get('sync').exec('helloSync.hello', helloObj.id, helloObj);	
+```
+
+references:  
+* [pomelo-sync](https://github.com/NetEase/pomelo-sync)
+* [pomelo-sync-plugin](https://github.com/NetEase/pomelo-sync-plugin)
+
 ## Examples
 - [bearcat-todo](https://github.com/bearcatnode/todo) 
 the tutorial is [bearcat-todo-tutorial](https://github.com/bearcatnode/bearcat/wiki/web-mvc-todo)  

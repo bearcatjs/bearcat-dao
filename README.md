@@ -163,7 +163,7 @@ var sync = require('pomelo-sync-plugin');
 app.use(sync, {sync: {path:__dirname + '/app/dao/mapping', dbclient: {}}});
 ``` 
 
-we now use bearcat-dao to handle db operations, therefor dbclient can an empty object to be compatible for pomelo-sync(in pomelo-sync dbclient must be passed)  
+we now use bearcat-dao to handle db operations, therefore dbclient can an empty object to be compatible for pomelo-sync(in pomelo-sync dbclient must be passed)  
 
 then in your application app/dao/mapping directory, you can write mappings  
 
@@ -188,6 +188,12 @@ app.get('sync').exec('helloSync.hello', helloObj.id, helloObj);
 references:  
 * [pomelo-sync](https://github.com/NetEase/pomelo-sync)
 * [pomelo-sync-plugin](https://github.com/NetEase/pomelo-sync-plugin)
+
+## Enable Debug Mode
+run with BEARCAT_DEBUG flag true  
+```
+BEARCAT_DEBUG=true node xxx.js
+```
 
 ## Examples
 - [bearcat-todo](https://github.com/bearcatnode/todo) 

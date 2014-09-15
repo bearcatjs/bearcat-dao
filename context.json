@@ -54,7 +54,8 @@
 		"aop": [{
 			"pointcut": "around:.*?Transaction$",
 			"advice": "doInTransaction",
-			"order": 100
+			"order": 100,
+			"runtime": true
 		}]
 	}]
 }

@@ -1,5 +1,6 @@
 {
 	"name": "bearcat-dao",
+	"scan": ["test/mock/model"],
 	"beans": [{
 		"id": "domainDaoSupport",
 		"func": "lib.core.domainDaoSupport",

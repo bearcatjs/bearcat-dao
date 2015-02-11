@@ -26,10 +26,10 @@ describe('bearcat-dao', function() {
 		});
 
 		it('should getSQL error right', function(done) {
-
 			bearcatDao.getSQL();
 			bearcatDao.getSQL('xxx');
 			bearcatDao.getSQL('authorResult');
+			bearcatDao.getSQL('authorResultLaw');
 
 			done();
 		});

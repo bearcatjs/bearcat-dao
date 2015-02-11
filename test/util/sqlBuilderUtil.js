@@ -66,5 +66,11 @@ describe('bearcat-dao', function() {
 			expected.should.eql(actual);
 			done();
 		});
+
+		it('should getSql right', function(done) {
+			SqlBuilderUtil.getSql();
+
+			done();
+		});
 	});
 });

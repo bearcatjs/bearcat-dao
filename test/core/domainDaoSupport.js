@@ -1,10 +1,12 @@
-var should = require('should');
-var Bearcat = require('bearcat');
-var personDomain = require('../mock/domain/person');
-var person1Domain = require('../mock/domain/person1');
-var person2Domain = require('../mock/domain/person2');
 var joinPersonDomain = require('../mock/domain/joinPerson');
 var domainFactory = require('../../lib/util/domainFactory');
+var person1Domain = require('../mock/domain/person1');
+var person2Domain = require('../mock/domain/person2');
+var personDomain = require('../mock/domain/person');
+var bearcatDao = require('../../lib/bearcat-dao');
+var Bearcat = require('bearcat');
+var should = require('should');
+var path = require('path');
 
 describe('domainDaoSupport', function() {
 	var simplepath = require.resolve('../../test-context.json');
@@ -15,6 +17,10 @@ describe('domainDaoSupport', function() {
 
 	before(function(done) {
 		bearcat.start(function() {
+			var sqlPath = require.resolve('../mock/schema.sql');
+			var sqlDirPath = path.dirname(sqlPath);
+
+			bearcatDao.loadSQL([sqlDirPath]);
 			done();
 		});
 	});
@@ -642,6 +648,212 @@ describe('domainDaoSupport', function() {
 				}
 				done();
 			});
+		});
+	});
+
+	describe('domainDaoSupport get config right', function() {
+		it('should do get config right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+
+			domainDaoSupport.getConfig({});
+			domainDaoSupport['domainMap']['a'] = 1;
+
+			domainDaoSupport.getConfig({
+				key: 'a',
+				func: function() {}
+			});
+
+			done();
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getByWhere model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 3;
+			var sql = ' id = ?';
+			domainDaoSupport.getByWhere(sql, id, function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				results.length.should.eql(1);
+
+				var person = results[0];
+				person.should.exist;
+				var id = person.getId();
+				var name = person.getName();
+				var num = person.getNum();
+				id.should.exist;
+				name.should.exist;
+				num.should.exist;
+
+				done();
+			})
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getList model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 3;
+			var sql = 'select * from bearcat_dao_test where id = ?';
+			domainDaoSupport.getList(sql, id, "person", function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				results.length.should.eql(1);
+
+				var person = results[0];
+				person.should.exist;
+				var id = person.getId();
+				var name = person.getName();
+				var num = person.getNum();
+				id.should.exist;
+				name.should.exist;
+				num.should.exist;
+
+				domainDaoSupport.getList(sql, id, function(err, results) {
+					err = err || true;
+					err.should.be.true;
+
+					results.length.should.eql(1);
+
+					var person = results[0];
+					person.should.exist;
+					var id = person.getId();
+					var name = person.getName();
+					var num = person.getNum();
+					id.should.exist;
+					name.should.exist;
+					num.should.exist;
+
+					done();
+				})
+			})
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getByPrimary model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 3;
+			domainDaoSupport.getByPrimary([id], function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				results.length.should.eql(1);
+
+				var person = results[0];
+				person.should.exist;
+				var id = person.getId();
+				var name = person.getName();
+				var num = person.getNum();
+				id.should.exist;
+				name.should.exist;
+				num.should.exist;
+
+				done();
+			})
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getListByWhere model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 3;
+			var sql = ' id = ?';
+			domainDaoSupport.getListByWhere(sql, [id], function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				results.length.should.eql(1);
+
+				var person = results[0];
+				person.should.exist;
+				var id = person.getId();
+				var name = person.getName();
+				var num = person.getNum();
+				id.should.exist;
+				name.should.exist;
+				num.should.exist;
+
+				domainDaoSupport.getListByWhere(sql, [id], "person", function(err, results) {
+					err = err || true;
+					err.should.be.true;
+
+					results.length.should.eql(1);
+
+					var person = results[0];
+					person.should.exist;
+					var id = person.getId();
+					var name = person.getName();
+					var num = person.getNum();
+					id.should.exist;
+					name.should.exist;
+					num.should.exist;
+
+					done();
+				})
+			})
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getList getSql model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 3;
+			var sql = 'select * from bearcat_dao_test where id = ?';
+			domainDaoSupport.getList("$queryPersonList", id, "person", function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				results.length.should.eql(1);
+
+				var person = results[0];
+				person.should.exist;
+				var id = person.getId();
+				var name = person.getName();
+				var num = person.getNum();
+				id.should.exist;
+				name.should.exist;
+				num.should.exist;
+
+				done();
+			})
+		});
+	});
+
+	describe('domainDaoSupport select model right', function() {
+		it('should do select getList getSql oneToMany model right', function(done) {
+			var domainDaoSupport = bearcat.getBean('domainDaoSupport');
+			domainDaoSupport.initConfig("person");
+
+			var id = 1;
+			var sql = 'select * from bearcat_dao_test where id = ?';
+			domainDaoSupport.getList("$blogResultSql", id, "blogResult", function(err, results) {
+				err = err || true;
+				err.should.be.true;
+
+				// results.length.should.eql(1);
+
+				// var blogResult = results[0];
+				var blogResult = results;
+				blogResult.should.exist;
+				blogResult.run();
+				console.log(blogResult.model);
+
+				done();
+			})
 		});
 	});
 });

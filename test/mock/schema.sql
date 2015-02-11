@@ -17,3 +17,14 @@
 
  	primary key(id, name)
  )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='bearcat_dao_test1';
+
+DROP TABLE IF EXISTS IDGenerator;
+create table IDGenerator(
+    name varchar(50) NOT NULL,
+    id bigint(20) unsigned NOT NULL DEFAULT 0,
+    
+    PRIMARY KEY (name)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into IDGenerator (name, id) values ('bearcat_dao_test', 1);
+insert into IDGenerator (name, id) values ('bearcat_dao_test1', 1);

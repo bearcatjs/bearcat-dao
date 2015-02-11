@@ -1,12 +1,11 @@
-var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
-
 var should = require('should');
-var Bearcat = require('bearcat');
+var bearcat = require('bearcat');
 
 describe('redisTemplate', function() {
 	var simplepath = require.resolve('../../../test-context.json');
 	var paths = [simplepath];
-	var bearcat = Bearcat.createApp(paths);
+	bearcat.stop();
+	bearcat.createApp(paths);
 
 	before(function(done) {
 		bearcat.start(function() {

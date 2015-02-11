@@ -1,12 +1,11 @@
-var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
-
-var MysqlConnectionManager = require('../../../' + lib + '/connection/sql/mysqlConnectionManager');
+var MysqlConnectionManager = require('../../../lib/connection/sql/mysqlConnectionManager');
 var should = require('should');
 
 describe('bearcat-dao', function() {
 	describe('mysqlConnectionManager', function() {
 		it('should getConnection right', function(done) {
 			var mysqlConnectionManager = new MysqlConnectionManager();
+			mysqlConnectionManager.setPort(5331);
 			mysqlConnectionManager.setUser('root');
 			mysqlConnectionManager.setPassword('test');
 			mysqlConnectionManager.setDatabase('test');
@@ -35,6 +34,7 @@ describe('bearcat-dao', function() {
 
 		it('should do not use pool', function(done) {
 			var mysqlConnectionManager = new MysqlConnectionManager();
+			mysqlConnectionManager.setPort(5331);
 			mysqlConnectionManager.setUsePool(false);
 			mysqlConnectionManager.setUser('root');
 			mysqlConnectionManager.setPassword('test');
@@ -50,7 +50,7 @@ describe('bearcat-dao', function() {
 
 		it('should set get right', function(done) {
 			var mysqlConnectionManager = new MysqlConnectionManager();
-			mysqlConnectionManager.setPort(3306);
+			mysqlConnectionManager.setPort(5331);
 			mysqlConnectionManager.getPort();
 			mysqlConnectionManager.setHost('localhost');
 			mysqlConnectionManager.getHost();

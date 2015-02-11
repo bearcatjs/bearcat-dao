@@ -51,11 +51,12 @@ bearcat.start(function() {
 	}
 
 	domainDaoSupport.getList(sql, null, opt, function(err, results) {
-		console.log(err);
 		err = err || true;
 
+		console.log(results)
 		for (var i = 0; i < results.length; i++) {
 			var person = results[i];
+			console.log(person instanceof joinPersonDomain.func);
 			var id = person.getId();
 			var num = person.getNum();
 		}

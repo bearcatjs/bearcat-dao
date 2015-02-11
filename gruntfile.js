@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
   var src = ['test/core/domainDaoSupport.js', 'test/connection/cache/*.js',
     'test/connection/sql/*.js', 'test/template/cache/*.js', 'test/util/*.js',
-    'test/bearcat-dao.js'
+    'test/bearcat-dao.js', 'test/loader/*.js', 'test/aspect/*.js'
   ];
 
   // Project configuration.

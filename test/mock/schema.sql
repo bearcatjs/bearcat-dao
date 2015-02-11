@@ -66,3 +66,12 @@ insert into IDGenerator (name, id) values ('bearcat_dao_test1', 1);
 insert into IDGenerator (name, id) values ('ba_blog', 1);
 insert into IDGenerator (name, id) values ('ba_comment', 1);
 insert into IDGenerator (name, id) values ('ba_author', 1);
+
+insert into ba_blog (id, aid, title, content, create_at, update_at) values (1, 1, 'test_title', 'test_content', 1423188291391, 1423188291391);
+insert into ba_author (id, name, create_at, update_at) values(1, 'test_author', 1423188291391, 1423188291391);    
+insert into ba_comment (id, aid, bid, content, create_at, update_at) values(1, 1, 1, 'test_comment_1', 1423188291391, 1423188291391);
+insert into ba_comment (id, aid, bid, content, create_at, update_at) values(2, 1, 1, 'test_comment_2', 1423188291391, 1423188291391);
+insert into ba_comment (id, aid, bid, content, create_at, update_at) values(3, 1, 1, 'test_comment_3', 1423188291391, 1423188291391);
+
+insert into ba_blog (id, aid, title, content, create_at, update_at) values (2, 2, 'test_title_2', 'test_content_2', 1423188291391, 1423188291391);
+insert into ba_author (id, name, create_at, update_at) values(2, 'test_author_2', 1423188291391, 1423188291391);  

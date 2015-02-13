@@ -4,7 +4,6 @@ var bearcat = require('bearcat');
 describe('redisTemplate', function() {
 	var simplepath = require.resolve('../../../test-context.json');
 	var paths = [simplepath];
-	bearcat.stop();
 	bearcat.createApp(paths);
 
 	before(function(done) {

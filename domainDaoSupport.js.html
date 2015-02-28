@@ -74,14 +74,45 @@
             <!--li><a href="../index.html">Main</a></li>
             <li><a href="../aspect/cacheAspect.js.html">aspect/cacheAspect.js</a></li>
             <li><a href="../aspect/transactionAspect.js.html">aspect/transactionAspect.js</a></li>
+            <li><a href="../bearcat-dao.js.html">bearcat-dao.js</a></li>
             <li><a href="../connection/cache/redisConnection.js.html">connection/cache/redisConnection.js</a></li>
             <li><a href="../connection/cache/redisConnectionManager.js.html">connection/cache/redisConnectionManager.js</a></li>
+            <li><a href="../connection/sql/ddbConnectionManager.js.html">connection/sql/ddbConnectionManager.js</a></li>
+            <li><a href="../connection/sql/mock.js.html">connection/sql/mock.js</a></li>
             <li><a href="../connection/sql/mysqlConnectionManager.js.html">connection/sql/mysqlConnectionManager.js</a></li>
             <li class="active"><a href="../core/domainDaoSupport.js.html">core/domainDaoSupport.js</a></li>
             <li><a href="../core/sqlDaoSupport.js.html">core/sqlDaoSupport.js</a></li>
+            <li><a href="../definition/deleteDefinition.js.html">definition/deleteDefinition.js</a></li>
+            <li><a href="../definition/expression/columnDefinition.js.html">definition/expression/columnDefinition.js</a></li>
+            <li><a href="../definition/expression/conditionDefinition.js.html">definition/expression/conditionDefinition.js</a></li>
+            <li><a href="../definition/expression/groupByDefinition.js.html">definition/expression/groupByDefinition.js</a></li>
+            <li><a href="../definition/expression/orderByDefinition.js.html">definition/expression/orderByDefinition.js</a></li>
+            <li><a href="../definition/insertDefinition.js.html">definition/insertDefinition.js</a></li>
+            <li><a href="../definition/selectDefinition.js.html">definition/selectDefinition.js</a></li>
+            <li><a href="../definition/sqlDefinition.js.html">definition/sqlDefinition.js</a></li>
+            <li><a href="../definition/tableDefinition.js.html">definition/tableDefinition.js</a></li>
+            <li><a href="../definition/updateDefinition.js.html">definition/updateDefinition.js</a></li>
+            <li><a href="../loader/sqlLoader.js.html">loader/sqlLoader.js</a></li>
+            <li><a href="../parser/sqlParser.js.html">parser/sqlParser.js</a></li>
+            <li><a href="../plan/performers/queryPlanPerformer.js.html">plan/performers/queryPlanPerformer.js</a></li>
+            <li><a href="../plan/performers/updatePlanPerformer.js.html">plan/performers/updatePlanPerformer.js</a></li>
+            <li><a href="../plan/planHelper.js.html">plan/planHelper.js</a></li>
+            <li><a href="../plan/planMaker.js.html">plan/planMaker.js</a></li>
+            <li><a href="../plan/planManager.js.html">plan/planManager.js</a></li>
+            <li><a href="../plan/plans/aggregatePlan.js.html">plan/plans/aggregatePlan.js</a></li>
+            <li><a href="../plan/plans/groupByPlan.js.html">plan/plans/groupByPlan.js</a></li>
+            <li><a href="../plan/plans/havingPlan.js.html">plan/plans/havingPlan.js</a></li>
+            <li><a href="../plan/plans/limitPlan.js.html">plan/plans/limitPlan.js</a></li>
+            <li><a href="../plan/plans/orderByPlan.js.html">plan/plans/orderByPlan.js</a></li>
+            <li><a href="../plan/plans/queryPlan.js.html">plan/plans/queryPlan.js</a></li>
+            <li><a href="../plan/plans/selectPlan.js.html">plan/plans/selectPlan.js</a></li>
+            <li><a href="../plan/plans/simpleSelectPlan.js.html">plan/plans/simpleSelectPlan.js</a></li>
+            <li><a href="../plan/plans/updatePlan.js.html">plan/plans/updatePlan.js</a></li>
+            <li><a href="../plan/queryPlanFactory.js.html">plan/queryPlanFactory.js</a></li>
             <li><a href="../support/fieldConfig.js.html">support/fieldConfig.js</a></li>
             <li><a href="../support/tableConfig.js.html">support/tableConfig.js</a></li>
             <li><a href="../template/cache/redisTemplate.js.html">template/cache/redisTemplate.js</a></li>
+            <li><a href="../template/sql/ddbTemplate.js.html">template/sql/ddbTemplate.js</a></li>
             <li><a href="../template/sql/mysqlTemplate.js.html">template/sql/mysqlTemplate.js</a></li>
             <li><a href="../transaction/cacheTransactionManager.js.html">transaction/cacheTransactionManager.js</a></li>
             <li><a href="../transaction/dbTransactionManager.js.html">transaction/dbTransactionManager.js</a></li>
@@ -92,7 +123,10 @@
             <li><a href="../util/countDownLatch.js.html">util/countDownLatch.js</a></li>
             <li><a href="../util/domainFactory.js.html">util/domainFactory.js</a></li>
             <li><a href="../util/fieldUtil.js.html">util/fieldUtil.js</a></li>
+            <li><a href="../util/fileUtil.js.html">util/fileUtil.js</a></li>
+            <li><a href="../util/shardingUtil.js.html">util/shardingUtil.js</a></li>
             <li><a href="../util/sqlBuilderUtil.js.html">util/sqlBuilderUtil.js</a></li>
+            <li><a href="../util/sqlUtil.js.html">util/sqlUtil.js</a></li>
             <li><a href="../util/utils.js.html">util/utils.js</a></li-->
           </ul>
           <div class="scrollspy">
@@ -100,6 +134,8 @@
               <li><a href="#DomainDaoSupport"><i class="alert alert-info"></i><span>DomainDaoSupport</span></a>
               </li>
               <li><a href="#initConfig"><i class="alert alert-info"></i><span>initConfig</span></a>
+              </li>
+              <li><a href="#initModelConfig"><i class="alert alert-info"></i><span>initModelConfig</span></a>
               </li>
               <li><a href="#getConfig"><i class="alert alert-info"></i><span>getConfig</span></a>
               </li>
@@ -178,9 +214,7 @@
   this.sqlTemplate = null;
   this.cacheTemplate = null;
   this.domainMap = {};
-}
-
-module.exports = DomainDaoSupport;</code></pre>
+}</code></pre>
           <section id="initConfig">
             <h1>initConfig</h1>
             <h5 class="subheader"></h5>
@@ -200,7 +234,7 @@ module.exports = DomainDaoSupport;</code></pre>
               <tr>
                 <td>domainConfig</td>
                 <td>Object</td>
-                <td>domain O/R mapping configuration</td>
+                <td>domain model mapping configuration</td>
               </tr>
               <tr>
                 <td>domainConfig.func</td>
@@ -210,7 +244,7 @@ module.exports = DomainDaoSupport;</code></pre>
               <tr>
                 <td>domainConfig.tableName</td>
                 <td>String</td>
-                <td>O/R mapping tableName</td>
+                <td>model mapping tableName</td>
               </tr>
               <tr>
                 <td>domainConfig.primary</td>
@@ -224,29 +258,74 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport domain O/R mapping configuration.<br />init domainDaoSupport with domainConfig to set up O/R mapping</p>
+          <div class="description"><p>DomainDaoSupport model mapping configuration.<br />init domainDaoSupport with domainConfig to set up model mapping<br />if domainConfig is string type, then do initModelConfig</p>
 
-<p>用domainConfig来初始化domainDaoSupport来设置O/R mapping</p> </div>
+<p>用domainConfig来初始化domainDaoSupport, 设置model mapping<br />如果 domainConfig 不是对象，而是String类型，则initModelConfig</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.initConfig = function(domainConfig) {
-  var func = domainConfig.func;
-  var tableName = domainConfig.tableName;
-  var primaryFields = domainConfig.primary || [];
-  var fields = domainConfig.fields || [];
-  if (!Utils.checkFunction(func)) {
-    logger.error('domain object have no OR mapping info ' + domainConfig);
-    return;
-  }
-  if (!tableName) {
-    logger.error('domain object OR mapping info have no tableName ' + domainConfig);
-    return;
+  if (Utils.checkString(domainConfig)) {
+    return this.initModelConfig(domainConfig);
   }
 
-  var tableConfig = new TableConfig();
-  tableConfig.setFunc(func);
-  tableConfig.setTableName(tableName);
-  tableConfig.setNormalFields(FieldUtil.buildFieldConfig(fields));
-  tableConfig.setPrimaryFields(FieldUtil.buildFieldConfig(primaryFields));
-  this.setTableConfig(tableConfig);
+  this.doInitConfig(domainConfig);
+}</code></pre>
+          <section id="initModelConfig">
+            <h1>initModelConfig</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>DomainDaoSupport.prototype.initModelConfig()</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>modelId</td>
+                <td>String</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>DomainDaoSupport model mapping configuration with modelId.<br />init domainDaoSupport with modelId to set up model mapping</p>
+
+<p>用modelId指定的bearcat model来初始化domainDaoSupport, 设置 model mapping<br />如果 domainConfig 不是对象，而是String类型，则initModelConfig</p> </div>
+          <pre><code class="language-javascript">DomainDaoSupport.prototype.initModelConfig = function(modelId) {
+  var bearcat = Utils.getBearcat();
+  var beanFactory = bearcat.getBeanFactory();
+  var modelDefinition = beanFactory.getModelDefinition(modelId);
+  var mid = modelDefinition.getMid();
+  var table = modelDefinition.getTable();
+  var fieldMap = modelDefinition.getFields();
+
+  var primary = [];
+  var fields = [];
+
+  for (var fieldKey in fieldMap) {
+    var fieldValue = fieldMap[fieldKey];
+    if (fieldValue.isPrimary()) {
+      var fieldType = fieldValue.getType();
+      primary.push({
+        name: fieldKey,
+        type: fieldType
+      })
+    } else {
+      fields.push(fieldKey);
+    }
+  }
+
+  var domainConfig = {
+    mid: mid,
+    tableName: table,
+    primary: primary,
+    fields: fields
+  }
+
+  this.doInitConfig(domainConfig);
 }</code></pre>
           <section id="getConfig">
             <h1>getConfig</h1>
@@ -267,7 +346,7 @@ module.exports = DomainDaoSupport;</code></pre>
               <tr>
                 <td>domainConfig</td>
                 <td>Object</td>
-                <td>domain O/R mapping configuration</td>
+                <td>domain model mapping configuration</td>
               </tr>
               <tr>
                 <td>domainConfig.func</td>
@@ -291,7 +370,7 @@ module.exports = DomainDaoSupport;</code></pre>
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport get domain O/R mapping configuration.<br />get domainConfig when doing multi table query</p>
+          <div class="description"><p>DomainDaoSupport get domain model mapping configuration.<br />get domainConfig when doing multi table query</p>
 
 <p>多表查询的时候获取domainConfig</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getConfig = function(domainConfig) {
@@ -299,6 +378,7 @@ module.exports = DomainDaoSupport;</code></pre>
   var key = domainConfig.key;
   var primaryFields = domainConfig.primary || [];
   var fields = domainConfig.fields || [];
+
   if (!Utils.checkFunction(func)) {
     logger.error('domain object have no OR mapping info ' + domainConfig);
     return;
@@ -386,7 +466,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport deleteById field id.<br />id must be the unique primary key </p>
+          <div class="description"><p>DomainDaoSupport deleteById field id.<br />id must be the unique primary key</p>
 
 <p>id 必须是唯一主键</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.deleteById = function(id, cb) {
@@ -453,7 +533,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Array</td>
-                <td>O/R mapping objects</td>
+                <td>model mapping objects</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -462,9 +542,9 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchAdd O/R mapping objects.<br />objects are O/R mapping domain instances array<br />if primary field is single and its type is Long<br />you do not need set this field when batchAdd<br />bearcat-dao will generate this unique id for your objects</p>
+          <div class="description"><p>DomainDaoSupport batchAdd model mapping objects.<br />objects are model mapping domain instances array<br />if primary field is single and its type is Long<br />you do not need set this field when batchAdd<br />bearcat-dao will generate this unique id for your objects</p>
 
-<p>objects 是O/R mapping对应的domain对象实例数组 <br />如果主键是唯一的类型为Long的,通常情况下这个是一个自增的字段<br />这时batchAdd的domain对象可以不设置该字段的值<br />bearcat-dao 会为这些domain对象生成唯一的id值 </p> </div>
+<p>objects 是model mapping对应的domain对象实例数组<br />如果主键是唯一的类型为Long的,通常情况下这个是一个自增的字段<br />这时batchAdd的domain对象可以不设置该字段的值<br />bearcat-dao 会为这些domain对象生成唯一的id值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchAdd = function(objects, cb) {
   if (!objects || !objects.length) {
     return cb();
@@ -533,7 +613,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Array</td>
-                <td>O/R mapping objects</td>
+                <td>model mapping objects</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -542,7 +622,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchUpdate O/R mapping objects.<br />domain objects fields must be fullfilled when batchUpdate<br />a good practise is update what you get </p>
+          <div class="description"><p>DomainDaoSupport batchUpdate model mapping objects.<br />domain objects fields must be fullfilled when batchUpdate<br />a good practise is update what you get</p>
 
 <p>当batchUpdate的时候，domain对象的所有属性必须都有值<br />一个好的实践就是更新你所查询的domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchUpdate = function(objects, cb) {
@@ -606,7 +686,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Array</td>
-                <td>O/R mapping objects</td>
+                <td>model mapping objects</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -615,7 +695,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport batchDelete O/R mapping objects.<br />doamin objects primary fields must be fullfilled</p>
+          <div class="description"><p>DomainDaoSupport batchDelete model mapping objects.<br />doamin objects primary fields must be fullfilled</p>
 
 <p>domain 对象的主键字段对应的值必须要有</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.batchDelete = function(objects, cb) {
@@ -830,14 +910,27 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport getList by sql, params.</p>
 
-<p>select by sql, query params, and the result will be mapped to O/R mapping domain objects<br />in options you can pass to set order, limit, offset<br />when doing multi table query, you must pass domain to options, domain is what you define for your muti query O/R mapping domain</p>
+<p>select by sql, query params, and the result will be mapped to model mapping domain objects<br />in options you can pass to set order, limit, offset<br />sql can be sql template id to specific sql, prefixed with $, "$testResult" for example<br />if options is string type, it means the resultSet mapping modelId</p>
 
-<p>根据sql，params来进行查询，查询结果会O/R mapping到domain对象<br />在options里，你可以传入order,limit,offset<br />当要进行多表联合查询的时候，必须在options里传入domain，domain就是你想要进行多表联合查询所对应的O/R mapping对象</p> </div>
+<p>根据sql，params来进行查询，查询结果会model mapping到domain对象<br />在options里，你可以传入order, limit, offset<br />sql 可以是 sql template id，以 $ 开头，比如 "$testResult"</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getList = function(sql, params, options, cb) {
+  sql = SqlBuilderUtil.getSql(sql);
+
   var tableConfig = this.getTableConfig();
+  var mid = tableConfig.getMid();
   var fields = tableConfig.getFields();
   var func = tableConfig.getFunc();
   var self = this;
+
+  if (Utils.checkString(options)) {
+    mid = options || mid;
+    options = {};
+  }
+
+  if (Utils.checkFunction(options)) {
+    cb = options;
+    options = {};
+  }
 
   options = options || {};
   var orderColumn = options.orderColumn;
@@ -845,6 +938,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
   var limit = options.limit;
   var offset = options.offset;
   var domain = options.domain;
+  var mid = options.mid || mid;
 
   if (orderColumn) {
     sql = SqlBuilderUtil.appendOrder(sql, orderColumn, isAsc);
@@ -860,6 +954,12 @@ SimpleDao.prototype.transaction = function(txStatus) {
     }
 
     var beanObjects = null;
+
+    if (mid) {
+      beanObjects = BeanBuilderUtil.buildModels(mid, results);
+      return cb(null, beanObjects);
+    }
+
     if (domain) {
       var domainConfig = self.getConfig(domain);
       beanObjects = BeanBuilderUtil.buildObjectList(results, domainConfig.getFunc(), domainConfig.getFields());
@@ -903,6 +1003,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
 <p>params 参数的顺序必须和domain里面主键定义的顺序相对应<br />根据主键来进行查询列表</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByPrimary = function(params, cb) {
   var tableConfig = this.getTableConfig();
+  var mid = tableConfig.getMid();
   var primaryFields = tableConfig.getPrimaryFields();
   var func = tableConfig.getFunc();
 
@@ -918,6 +1019,11 @@ SimpleDao.prototype.transaction = function(txStatus) {
   return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
     if (err) {
       return cb(err);
+    }
+
+    if (mid) {
+      beanObjects = BeanBuilderUtil.buildModels(mid, results);
+      return cb(null, beanObjects);
     }
 
     var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
@@ -952,7 +1058,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport getList by id.<br />id must be the unique primary key </p>
+          <div class="description"><p>DomainDaoSupport getList by id.<br />id must be the unique primary key</p>
 
 <p>id 必须是唯一主键</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getById = function(id, cb) {
@@ -995,16 +1101,22 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport getList by sql, params.</p>
 
-<p>select by sql, query params, and the result will be mapped to O/R mapping domain objects</p>
+<p>select by sql, query params, and the result will be mapped to model mapping domain objects</p>
 
-<p>根据sql，params来进行查询，查询结果会O/R mapping到domain对象</p> </div>
+<p>根据sql，params来进行查询，查询结果会model mapping到domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.get = function(sql, params, cb) {
   var tableConfig = this.getTableConfig();
+  var mid = tableConfig.getMid();
   var func = tableConfig.getFunc();
 
   return this.getSqlTemplate().executeQuery(sql, params, function(err, results) {
     if (err) {
       return cb(err);
+    }
+
+    if (mid) {
+      beanObjects = BeanBuilderUtil.buildModels(mid, results);
+      return cb(null, beanObjects);
     }
 
     var beanObjects = BeanBuilderUtil.buildObjectList(results, func, tableConfig.getFields());
@@ -1086,7 +1198,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Object</td>
-                <td>O/R mapping object</td>
+                <td>model mapping object</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -1095,9 +1207,9 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport add by sql, params or by O/R mapping object.</p>
+          <div class="description"><p>DomainDaoSupport add by sql, params or by model mapping object.</p>
 
-<p>通过sql，params来添加数据 或者 通过 O/R mapping 的 domain object 对象来添加数据</p> </div>
+<p>通过sql，params来添加数据 或者 通过 model mapping 的 domain object 对象来添加数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.add = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchAdd([sql], params);
@@ -1139,7 +1251,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Object</td>
-                <td>O/R mapping object</td>
+                <td>model mapping object</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -1148,9 +1260,9 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport delete by sql, params or by O/R mapping object.</p>
+          <div class="description"><p>DomainDaoSupport delete by sql, params or by model mapping object.</p>
 
-<p>通过sql，params来删除数据 或者 通过 O/R mapping 的 domain object 对象来删除数据</p> </div>
+<p>通过sql，params来删除数据 或者 通过 model mapping 的 domain object 对象来删除数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.delete = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchDelete([sql], params);
@@ -1192,7 +1304,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
               <tr>
                 <td>objects</td>
                 <td>Object</td>
-                <td>O/R mapping object</td>
+                <td>model mapping object</td>
               </tr>
               <tr>
                 <td>cb</td>
@@ -1201,9 +1313,9 @@ SimpleDao.prototype.transaction = function(txStatus) {
               </tr>
             </tbody>
           </table>
-          <div class="description"><p>DomainDaoSupport update by sql, params or by O/R mapping object.</p>
+          <div class="description"><p>DomainDaoSupport update by sql, params or by model mapping object.</p>
 
-<p>通过sql，params来更新数据 或者 通过 O/R mapping 的 domain object 对象来更新数据</p> </div>
+<p>通过sql，params来更新数据 或者 通过 model mapping 的 domain object 对象来更新数据</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.update = function(sql, params, cb) {
   if (Utils.checkObject(sql) &amp;&amp; Utils.checkFunction(params)) {
     return this.batchUpdate([sql], params);
@@ -1319,9 +1431,9 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport getList by where.</p>
 
-<p>select by where sql, query params, and the result will be mapped to O/R mapping domain objects</p>
+<p>select by where sql, query params, and the result will be mapped to model mapping domain objects</p>
 
-<p>根据where查询sql，params来进行查询，查询结果会O/R mapping到domain对象</p> </div>
+<p>根据where查询sql，params来进行查询，查询结果会model mapping到domain对象</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getByWhere = function(where, args, cb) {
   var tableConfig = this.getTableConfig();
 
@@ -1394,13 +1506,24 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport getList by where.</p>
 
-<p>select by where sql, query params, and the result will be mapped to O/R mapping domain objects<br />in options you can pass to set order, limit, offset<br />when doing multi table query, you must pass domain to options, domain is what you define for your muti query O/R mapping domain</p>
+<p>select by sql, query params, and the result will be mapped to model mapping domain objects<br />in options you can pass to set order, limit, offset<br />sql can be sql template id to specific sql, prefixed with $, "$testResult" for example<br />if options is string type, it means the resultSet mapping modelId</p>
 
-<p>根据where查询sql，params来进行查询，查询结果会O/R mapping到domain对象<br />在options里，你可以传入order,limit,offset<br />当要进行多表联合查询的时候，必须在options里传入domain，domain就是你想要进行多表联合查询所对应的O/R mapping对象</p> </div>
+<p>根据sql，params来进行查询，查询结果会model mapping到domain对象<br />在options里，你可以传入order, limit, offset<br />sql 可以是 sql template id，以 $ 开头，比如 "$testResult"</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.getListByWhere = function(where, args, options, cb) {
   var tableConfig = this.getTableConfig();
+  var mid = tableConfig.getMid();
 
   var sql = util.format(SQL_SELECT, tableConfig.getTableName(), where);
+
+  if (Utils.checkString(options)) {
+    mid = options || mid;
+    options = {};
+  }
+
+  if (Utils.checkFunction(options)) {
+    cb = options;
+    options = {};
+  }
 
   options = options || {};
   var orderColumn = options.orderColumn;
@@ -1408,6 +1531,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
   var limit = options.limit;
   var offset = options.offset;
   var domain = options.domain;
+  var mid = options.mid || mid;
 
   var opt = {};
 
@@ -1421,6 +1545,10 @@ SimpleDao.prototype.transaction = function(txStatus) {
 
   if (domain) {
     opt['domain'] = domain;
+  }
+
+  if (mid) {
+    opt['mid'] = mid;
   }
 
   return this.getList(sql, args, opt, cb);
@@ -1690,7 +1818,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport incr counter by 1.</p>
 
-<p>计数器增加值1 </p> </div>
+<p>计数器增加值1</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incr = function(key) {
   return this.getCacheTemplate().incr(key)
 }</code></pre>
@@ -1724,7 +1852,7 @@ SimpleDao.prototype.transaction = function(txStatus) {
           </table>
           <div class="description"><p>DomainDaoSupport incr counter by increment.</p>
 
-<p>计数器增加值increment </p> </div>
+<p>计数器增加值increment</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.incrBy = function(key, increment) {
   return this.getCacheTemplate().incrBy(key, increment);
 }</code></pre>
@@ -1756,15 +1884,14 @@ SimpleDao.prototype.transaction = function(txStatus) {
 <p>从cache删除key对应的值</p> </div>
           <pre><code class="language-javascript">DomainDaoSupport.prototype.removeFromCache = function(key) {
   return this.getCacheTemplate().delFromCache(key);
-}</code></pre>
+}
+
+module.exports = DomainDaoSupport;</code></pre>
         </div>
       </div>
     </div>
     <footer class="footer">
       <div class="container">
-        <!--p>Documentation generated with<a href="https://github.com/FGRibreau/doxx">Doxx</a>created by<a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau</a></p>
-        <p>Doxx is sponsored by<a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr</a>and<a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
-        <p>Theme borrowed from Twitter Bootstrap</p-->
       </div>
     </footer>
     <script src="javascripts/widgets.js"></script>

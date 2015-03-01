@@ -1,6 +1,4 @@
-var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
-
-var RedisConnectionManager = require('../../../' + lib + '/connection/cache/redisConnectionManager');
+var RedisConnectionManager = require('../../../lib/connection/cache/redisConnectionManager');
 var should = require('should');
 
 describe('bearcat-dao', function() {

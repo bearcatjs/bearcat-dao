@@ -1,7 +1,5 @@
-var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
-
 var should = require('should');
-var SqlBuilderUtil = require('../../' + lib + '/util/sqlBuilderUtil');
+var SqlBuilderUtil = require('../../lib/util/sqlBuilderUtil');
 
 describe('bearcat-dao', function() {
 	describe('sqlBuilderUtil', function() {
@@ -66,6 +64,12 @@ describe('bearcat-dao', function() {
 			var actual = SqlBuilderUtil.buildBatchDeleteSql(tableName, columns, 2);
 
 			expected.should.eql(actual);
+			done();
+		});
+
+		it('should getSql right', function(done) {
+			SqlBuilderUtil.getSql();
+
 			done();
 		});
 	});

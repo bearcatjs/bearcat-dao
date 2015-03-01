@@ -7,7 +7,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  var src = ['test/core/domainDaoSupport.js', 'test/connection/cache/*.js', 'test/connection/sql/*.js', 'test/template/cache/*.js', 'test/util/*.js'];
+  var src = ['test/core/domainDaoSupport.js', 'test/connection/cache/*.js',
+    'test/connection/sql/*.js', 'test/template/cache/*.js', 'test/util/*.js',
+    'test/bearcat-dao.js', 'test/loader/*.js', 'test/aspect/*.js'
+  ];
 
   // Project configuration.
   grunt.initConfig({
@@ -23,7 +26,8 @@ module.exports = function(grunt) {
       dot: {
         options: {
           reporter: 'dot',
-          timeout: 5000
+          timeout: 100000,
+          require: 'coverage/blanket'
         },
         src: src
       },
@@ -37,9 +41,6 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      coverage: {
-        src: ['lib-cov/']
-      },
       "coverage.html": {
         src: ['coverage.html']
       }
@@ -50,10 +51,5 @@ module.exports = function(grunt) {
   });
   // Default task.
   // grunt.registerTask('default', ['clean', 'jscoverage', 'mochaTest:dot', 'jshint:all']);
-  grunt.registerTask('default', ['clean', 'jscoverage', 'mochaTest:dot']);
-
-  grunt.registerTask('test-cov', 'run mocha html-cov reporter to coverage.html', function() {
-    process.env.BEARCAT_DAO_COV = true;
-    grunt.task.run(['mochaTest:coverage']);
-  });
+  grunt.registerTask('default', ['clean', 'jscoverage', 'mochaTest']);
 };

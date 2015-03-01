@@ -1,8 +1,6 @@
-var lib = process.env.BEARCAT_DAO_COV ? 'lib-cov' : 'lib';
-
 var should = require('should');
 
-var CountDownLatch = require('../../' + lib + '/util/countDownLatch');
+var CountDownLatch = require('../../lib/util/countDownLatch');
 
 describe('countDownLatch', function() {
 	describe('countDownLatch', function() {

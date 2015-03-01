@@ -1,8 +1,9 @@
 {
 	"name": "bearcat-dao",
+	"scan": ["test/mock/model"],
 	"beans": [{
 		"id": "domainDaoSupport",
-		"func": "lib-cov.core.domainDaoSupport",
+		"func": "lib.core.domainDaoSupport",
 		"scope": "prototype",
 		"props": [{
 			"name": "sqlTemplate",
@@ -13,7 +14,7 @@
 		}]
 	}, {
 		"id": "sqlTemplate",
-		"func": "lib-cov.template.sql.mysqlTemplate",
+		"func": "lib.template.sql.mysqlTemplate",
 		"props": [{
 			"name": "connectionManager",
 			"ref": "mysqlConnectionManager"
@@ -23,18 +24,18 @@
 		}]
 	}, {
 		"id": "cacheTemplate",
-		"func": "lib-cov.template.cache.redisTemplate",
+		"func": "lib.template.cache.redisTemplate",
 		"props": [{
 			"name": "connectionManager",
 			"ref": "redisConnectionManager"
 		}]
 	}, {
 		"id": "mysqlConnectionManager",
-		"func": "lib-cov.connection.sql.mysqlConnectionManager",
+		"func": "lib.connection.sql.mysqlConnectionManager",
 		"proxy": false,
 		"props": [{
 			"name": "port",
-			"value": 3306
+			"value": 5331
 		}, {
 			"name": "host",
 			"value": "localhost"
@@ -50,10 +51,10 @@
 		}]
 	}, {
 		"id": "redisConnectionManager",
-		"func": "lib-cov.connection.cache.redisConnectionManager"
+		"func": "lib.connection.cache.redisConnectionManager"
 	}, {
 		"id": "dbTransactionManager",
-		"func": "lib-cov.transaction.dbTransactionManager",
+		"func": "lib.transaction.dbTransactionManager",
 		"props": [{
 			"name": "connectionManager",
 			"ref": "mysqlConnectionManager"
@@ -61,7 +62,7 @@
 		"proxy": false
 	}, {
 		"id": "transactionAspect",
-		"func": "lib-cov.aspect.transactionAspect",
+		"func": "lib.aspect.transactionAspect",
 		"props": [{
 			"name": "dbTransactionManager",
 			"ref": "dbTransactionManager"

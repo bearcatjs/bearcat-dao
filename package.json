@@ -1,24 +1,28 @@
 {
   "name": "bearcat-dao",
-  "version": "0.1.22",
-  "description": "dao O/R mapping, transaction framework",
+  "version": "0.2.0",
+  "description": "SQL mapping dao framework",
   "main": "index.js",
   "scripts": {
     "test": "grunt"
   },
   "keywords": [
     "dao",
-    "framework"
+    "framework",
+    "sql",
+    "sql mapping",
+    "transaction"
   ],
   "dependencies": {
     "pomelo-logger": "0.1.x",
-    "redis": "0.9.x",
-    "mysql": "2.0.x"
+    "async": "^0.9.0",
+    "redis": "0.12.x",
+    "mysql": "2.5.x"
   },
   "author": "fantasyni",
   "license": "MIT",
   "devDependencies": {
-    "bearcat": "0.1.x",
+    "bearcat": "0.4.x",
     "should": ">=0.0.1",
     "mocha": ">=0.0.1",
     "socket.io-client": ">=0.0.1",

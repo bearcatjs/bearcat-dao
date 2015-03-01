@@ -1,3 +1,7 @@
+0.2.1 / 2015-3-1
+==================
+* fix some bugs, make improvements
+
 0.2.0 / 2015-3-1
 ==================
 * release 0.2.0, see [bearcat-dao](http://bearcatjs.org/topic/dao.html)

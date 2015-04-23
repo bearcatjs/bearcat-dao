@@ -1,0 +1,55 @@
+{
+	"name": "bearcat-dao",
+	"scan": ["test/mock/model/ddb"],
+	"beans": [{
+		"id": "sqlTemplate",
+		"func": "lib.template.sql.ddbTemplate",
+		"props": [{
+			"name": "planManager",
+			"ref": "planManager"
+		}]
+	}, {
+		"id": "ddbConnectionManager",
+		"func": "lib.connection.sql.ddbConnectionManager",
+		"proxy": false,
+		"props": [{
+			"name": "user",
+			"value": "san"
+		}, {
+			"name": "password",
+			"value": "bearcat"
+		}, {
+			"name": "zkServers",
+			"value": "${zk.servers}"
+		}, {
+			"name": "zkChroot",
+			"value": "${zk.chroot}"
+		}]
+	}, {
+		"id": "planManager",
+		"func": "lib.plan.planManager",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "ddbConnectionManager"
+		}]
+	}, {
+		"id": "redisConnectionManager",
+		"func": "lib.connection.cache.redisClusterConnectionManager",
+		"proxy": false,
+		"props": [{
+			"name": "zkServers",
+			"value": "${zk.servers}"
+		}, {
+			"name": "zkChroot",
+			"value": "${zk.chroot}"
+		}]
+	}, {
+		"id": "redisTemplate",
+		"func": "lib.template.cache.redisClusterTemplate",
+		"props": [{
+			"name": "connectionManager",
+			"ref": "redisConnectionManager"
+		}],
+		"init": "init"
+	}]
+}

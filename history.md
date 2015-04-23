@@ -1,3 +1,11 @@
+0.2.4 / 2015-4-24
+==================
+* fix directPlan get connection bug
+
+0.2.3 / 2015-4-23
+==================
+* add dependency bearcat-sql
+
 0.2.2 / 2015-4-23
 ==================
 * add mysql and redis cluster client sharding support based on bearcat-ha 

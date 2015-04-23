@@ -1,3 +1,7 @@
+0.2.2 / 2015-4-23
+==================
+* add mysql and redis cluster client sharding support based on bearcat-ha 
+
 0.2.1 / 2015-3-1
 ==================
 * fix some bugs, make improvements

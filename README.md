@@ -38,6 +38,7 @@ in the ***TestModel***, we use ***$table*** attribute to setup the mapping table
 
 ## Relation
 Tables in relational database can have relations, there are one-to-one relation, one-to-many relation, many-to-many relation  
+
 ### One-to-one relation
 One-to-one relation means in two models, one model has the reference of the other model  
 
@@ -67,7 +68,7 @@ var Test1Model = function() {
     this.$mid = "test1Model";
     this.$table = "test1";
     this.id = "$primary;type:Number";
-    this.rid = "$type:Object;ref:test2Model"
+    this.test2 = "$type:Object;ref:test2Model"
 }
   
 module.exports = Test1Model;
@@ -83,7 +84,7 @@ var Test2Model = function() {
 module.exports = Test2Model;
 ```
 
-as we can see, in ***Test1Model.rid*** attribute we use ***ref:test2Model*** to set the reference to ***test2Model***  
+as we can see, in ***Test1Model.test2*** attribute we use ***ref:test2Model*** to set the reference to ***test2Model***  
 
 ### One-to-many relation
 One-to-many relation means one model refer to the array of other model. In the real world, for example, we can have a blog, and a blog have many commnets, so blog and comment are one-to-many relation.  
@@ -93,13 +94,13 @@ var Test1Model = function() {
     this.$mid = "test1Model";
     this.$table = "test1";
     this.id = "$primary;type:Number";
-    this.rid = "$type:Array;ref:test2Model"
+    this.test2 = "$type:Array;ref:test2Model"
 }
   
 module.exports = Test1Model;
 ```
 
-therefore, in the above example, we simply modify the ***rid*** attribute type to ***Array***, it becomes a one-to-many relation  
+therefore, in the above example, we simply modify the ***test2*** attribute type to ***Array***, it becomes a one-to-many relation  
 
 ### Many-to-many relation
 many-to-many relation can be spilted into two one-many relation through middle table  

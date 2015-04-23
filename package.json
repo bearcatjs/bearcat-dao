@@ -1,6 +1,6 @@
 {
   "name": "bearcat-dao",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "SQL mapping dao framework",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "pomelo-logger": "0.1.x",
     "async": "^0.9.0",
     "redis": "0.12.x",
-    "mysql": "2.5.x"
+    "mysql": "2.6.x",
+    "bearcat-ha": "0.1.x",
+    "redis-crc": "0.1.x"
   },
   "author": "fantasyni",
   "license": "MIT",

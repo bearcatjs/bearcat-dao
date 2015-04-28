@@ -1,3 +1,7 @@
+0.2.5 / 2015-4-28
+==================
+* fix modelGet get value bug
+
 0.2.4 / 2015-4-24
 ==================
 * fix directPlan get connection bug

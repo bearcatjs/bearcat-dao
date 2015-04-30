@@ -1,6 +1,6 @@
 {
   "name": "bearcat-dao",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "SQL mapping dao framework",
   "main": "index.js",
   "scripts": {

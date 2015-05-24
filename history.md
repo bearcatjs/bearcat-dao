@@ -1,3 +1,7 @@
+0.2.10 / 2015-5-24
+==================
+* redisClusterTemplate add multi command same key transaction
+
 0.2.9 / 2015-5-24
 ==================
 * redisClusterTemplate add multi command support

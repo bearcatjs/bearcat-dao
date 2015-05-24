@@ -1,3 +1,7 @@
+0.2.9 / 2015-5-24
+==================
+* redisClusterTemplate add multi command support
+
 0.2.5 / 2015-4-28
 ==================
 * fix modelGet get value bug

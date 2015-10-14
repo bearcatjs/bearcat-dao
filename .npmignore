@@ -16,3 +16,4 @@ design/
 knex/
 sequelize/
 config/
+test_

@@ -1,3 +1,11 @@
+0.2.12 / 2016-1-28
+==================
+* update mysqlTemplate add directQuery, directAdd interface to be compatible with ddbTemplate
+
+0.2.11 / 2015-10-14
+==================
+* make domainDaoSupport support $ prefix sql
+
 0.2.10 / 2015-5-24
 ==================
 * redisClusterTemplate add multi command same key transaction
